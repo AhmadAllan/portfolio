@@ -1,0 +1,24 @@
+:root {
+    --deep-navy-blue: #01257D;
+    --electric-blue: #00adad;
+}
+
+nav {
+    display: flex;
+    justify-content: end;
+    gap: 40px;
+    margin-right: 50px;
+}
+
+.nav-element{
+    text-decoration: none;
+    color: black;
+    padding: 10px;
+    font-size: 1.5em;
+}
+.nav-element:hover {
+    padding: 5px;
+    cursor: pointer;
+    border-bottom: 5px solid #01257D;
+    color: #0032af;
+}
