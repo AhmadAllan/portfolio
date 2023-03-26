@@ -1,26 +1,40 @@
 a{
-    color: white;
+    color: #00d742;
 }
 section {
     margin: 0 10px 0 10px;
 }
+
 .hero-title {
-    width: 80%;
+    width: 85%;
     display: flex;
+    justify-content: center;
     margin: 50px auto;
     font-size: 5em;
 }
 
-.hero-title span {
-    animation: blink-animation 1s steps(5, start) infinite;
-    background-color: black;
-}
-@keyframes blink-animation {
-    to {
-      visibility: hidden;
-    }
-}
 
+.hero-title p {
+    overflow: hidden; 
+    border-right: .15em solid black;
+    white-space: nowrap;
+    margin: 0 auto; 
+    animation: 
+      typing 3.5s steps(40, end),
+      blink-caret .75s step-end infinite;
+
+    font-size: 1em;
+}
+  
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+  
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: black; }
+} 
 
 .hero-description {
     width: 70%;
@@ -66,7 +80,7 @@ section {
   
 .fakeScreen {
     background-color: #151515;
-    color: white;
+    color: #00d742;
     box-sizing: border-box;
     width: 70%;
     margin: 0 auto;
@@ -75,5 +89,4 @@ section {
     border-bottom-right-radius: 5px;
 }
 
-  
-  
+
