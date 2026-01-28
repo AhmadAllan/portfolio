@@ -40,3 +40,11 @@ Thumbs.db
 
 .nx/cache
 .nx/workspace-data
+
+# AI generated files
+.specify
+.claude
+
+CLAUDE.md
+lovecraftian-portfolio-prd.md
+speckit-constitution.md
