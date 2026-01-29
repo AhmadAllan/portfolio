@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash:*)",
+      "Bash(powershell -Command \"Get-Content .specify/scripts/bash/check-prerequisites.sh\")",
+      "Bash(npm install:*)"
+    ]
+  }
+}

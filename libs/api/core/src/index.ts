@@ -4,6 +4,15 @@ export * from './lib/core.module';
 // Config
 export * from './lib/config/config.module';
 
+// Auth
+export * from './lib/auth';
+
+// Guards
+export * from './lib/guards/jwt-auth.guard';
+
+// Decorators
+export * from './lib/decorators';
+
 // Interceptors
 export * from './lib/interceptors/jsend.interceptor';
 

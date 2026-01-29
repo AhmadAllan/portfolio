@@ -1,6 +1,6 @@
 # Implementation Plan: Lovecraftian Portfolio Platform MVP
 
-**Branch**: `001-lovecraftian-portfolio-mvp` | **Date**: 2026-01-28 | **Spec**: [spec.md](./spec.md)
+**Branch**: `001-lovecraftian-portfolio-mvp` | **Date**: 2026-01-28 | **Spec**: [spec.md](spec.md)
 **Input**: Feature specification from `/specs/001-lovecraftian-portfolio-mvp/spec.md`
 
 ## Summary

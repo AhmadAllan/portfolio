@@ -53,54 +53,54 @@ Based on plan.md Nx monorepo structure:
 
 ### Database & Schema
 
-- [ ] T016 Configure Drizzle ORM connection in libs/api/core/src/lib/database/drizzle.config.ts
+- [X] T016 Configure Drizzle ORM connection in libs/api/core/src/lib/database/drizzle.config.ts
 - [ ] T017 Create PostgreSQL database and configure DATABASE_URL in .env
-- [ ] T018 [P] Define User entity schema in libs/api/core/src/lib/database/schema/user.schema.ts
-- [ ] T019 [P] Define Post, Category, Tag, Series schemas in libs/api/core/src/lib/database/schema/blog.schema.ts
-- [ ] T020 [P] Define Comment schema in libs/api/core/src/lib/database/schema/blog.schema.ts
-- [ ] T021 [P] Define Note, NoteLink schemas in libs/api/core/src/lib/database/schema/garden.schema.ts
-- [ ] T022 [P] Define Project, Experience, Skill, Education, About schemas in libs/api/core/src/lib/database/schema/portfolio.schema.ts
-- [ ] T023 [P] Define MediaFile, MediaFolder schemas in libs/api/core/src/lib/database/schema/media.schema.ts
-- [ ] T024 Create schema index file exporting all tables in libs/api/core/src/lib/database/schema/index.ts
+- [X] T018 [P] Define User entity schema in libs/api/core/src/lib/database/schema/user.schema.ts
+- [X] T019 [P] Define Post, Category, Tag, Series schemas in libs/api/core/src/lib/database/schema/blog.schema.ts
+- [X] T020 [P] Define Comment schema in libs/api/core/src/lib/database/schema/blog.schema.ts
+- [X] T021 [P] Define Note, NoteLink schemas in libs/api/core/src/lib/database/schema/garden.schema.ts
+- [X] T022 [P] Define Project, Experience, Skill, Education, About schemas in libs/api/core/src/lib/database/schema/portfolio.schema.ts
+- [X] T023 [P] Define MediaFile, MediaFolder schemas in libs/api/core/src/lib/database/schema/media.schema.ts
+- [X] T024 Create schema index file exporting all tables in libs/api/core/src/lib/database/schema/index.ts
 - [ ] T025 Run initial database migration with drizzle-kit push
 
 ### Shared Types
 
-- [ ] T026 [P] Define IUser interface in libs/shared/types/src/lib/common/user.interface.ts
-- [ ] T027 [P] Define IPost, ICategory, ITag, ISeries interfaces in libs/shared/types/src/lib/blog/index.ts
-- [ ] T028 [P] Define IComment interface in libs/shared/types/src/lib/blog/comment.interface.ts
-- [ ] T029 [P] Define INote, INoteLink interfaces in libs/shared/types/src/lib/garden/index.ts
-- [ ] T030 [P] Define IProject, IExperience, ISkill, IEducation, IAbout interfaces in libs/shared/types/src/lib/portfolio/index.ts
-- [ ] T031 [P] Define IMediaFile, IMediaFolder interfaces in libs/shared/types/src/lib/media/index.ts
-- [ ] T032 [P] Define common types (enums, pagination, JSend responses) in libs/shared/types/src/lib/common/index.ts
-- [ ] T033 Create shared types barrel export in libs/shared/types/src/index.ts
+- [X] T026 [P] Define IUser interface in libs/shared/types/src/lib/common/user.interface.ts
+- [X] T027 [P] Define IPost, ICategory, ITag, ISeries interfaces in libs/shared/types/src/lib/blog/index.ts
+- [X] T028 [P] Define IComment interface in libs/shared/types/src/lib/blog/comment.interface.ts
+- [X] T029 [P] Define INote, INoteLink interfaces in libs/shared/types/src/lib/garden/index.ts
+- [X] T030 [P] Define IProject, IExperience, ISkill, IEducation, IAbout interfaces in libs/shared/types/src/lib/portfolio/index.ts
+- [X] T031 [P] Define IMediaFile, IMediaFolder interfaces in libs/shared/types/src/lib/media/index.ts
+- [X] T032 [P] Define common types (enums, pagination, JSend responses) in libs/shared/types/src/lib/common/index.ts
+- [X] T033 Create shared types barrel export in libs/shared/types/src/index.ts
 
 ### API Core Infrastructure
 
-- [ ] T034 Implement ConfigModule with environment validation in libs/api/core/src/lib/config/config.module.ts
-- [ ] T035 [P] Create JSend response interceptor in libs/api/core/src/lib/interceptors/jsend.interceptor.ts
-- [ ] T036 [P] Create global exception filter in libs/api/core/src/lib/filters/http-exception.filter.ts
-- [ ] T037 [P] Create validation pipe configuration in libs/api/core/src/lib/pipes/validation.pipe.ts
-- [ ] T037b [P] Configure CSRF protection middleware for mutation endpoints in libs/api/core/src/lib/middleware/csrf.middleware.ts
-- [ ] T038 Configure Swagger/OpenAPI documentation in apps/api/src/main.ts
-- [ ] T039 Create CoreModule importing all core providers in libs/api/core/src/lib/core.module.ts
-- [ ] T040 Wire CoreModule into apps/api/src/app/app.module.ts
+- [X] T034 Implement ConfigModule with environment validation in libs/api/core/src/lib/config/config.module.ts
+- [X] T035 [P] Create JSend response interceptor in libs/api/core/src/lib/interceptors/jsend.interceptor.ts
+- [X] T036 [P] Create global exception filter in libs/api/core/src/lib/filters/http-exception.filter.ts
+- [X] T037 [P] Create validation pipe configuration in libs/api/core/src/lib/pipes/validation.pipe.ts
+- [X] T037b [P] Configure CSRF protection middleware for mutation endpoints in libs/api/core/src/lib/middleware/csrf.middleware.ts
+- [X] T038 Configure Swagger/OpenAPI documentation in apps/api/src/main.ts
+- [X] T039 Create CoreModule importing all core providers in libs/api/core/src/lib/core.module.ts
+- [X] T040 Wire CoreModule into apps/api/src/app/app.module.ts
 
 ### Frontend Core Infrastructure
 
-- [ ] T041 Generate shared data-access library: `nx g @nx/angular:lib data-access --directory=libs/web/shared --standalone`
-- [ ] T042 Generate shared UI library: `nx g @nx/angular:lib ui --directory=libs/web/shared --standalone`
-- [ ] T043 Generate shared ui-layout library: `nx g @nx/angular:lib ui-layout --directory=libs/web/shared --standalone`
-- [ ] T044 Generate shared util-i18n library: `nx g @nx/angular:lib util-i18n --directory=libs/web/shared --standalone`
-- [ ] T045 Generate shared util-formatting library: `nx g @nx/angular:lib util-formatting --directory=libs/web/shared --standalone`
-- [ ] T046 [P] Create HTTP client service in libs/web/shared/data-access/src/lib/http-client.service.ts
-- [ ] T047 [P] Create API interceptor for error handling in libs/web/shared/data-access/src/lib/api.interceptor.ts
-- [ ] T048 [P] Implement i18n service with Arabic/English support in libs/web/shared/util-i18n/src/lib/i18n.service.ts
-- [ ] T049 [P] Create translation JSON files in apps/web/src/assets/i18n/ar.json and en.json
-- [ ] T050 [P] Implement date formatting utility with locale support in libs/web/shared/util-formatting/src/lib/date-format.pipe.ts
-- [ ] T051 Configure Angular SSR with provideClientHydration in apps/web/src/app/app.config.ts
-- [ ] T052 Configure i18n providers in apps/web/src/app/app.config.ts
-- [ ] T053 Create RTL-aware layout wrapper component in libs/web/shared/ui-layout/src/lib/layout/layout.component.ts
+- [X] T041 Generate shared data-access library: `nx g @nx/angular:lib data-access --directory=libs/web/shared --standalone` (consolidated into single shared lib)
+- [X] T042 Generate shared UI library: `nx g @nx/angular:lib ui --directory=libs/web/shared --standalone` (consolidated into single shared lib)
+- [X] T043 Generate shared ui-layout library: `nx g @nx/angular:lib ui-layout --directory=libs/web/shared --standalone` (consolidated into single shared lib)
+- [X] T044 Generate shared util-i18n library: `nx g @nx/angular:lib util-i18n --directory=libs/web/shared --standalone` (consolidated into single shared lib)
+- [X] T045 Generate shared util-formatting library: `nx g @nx/angular:lib util-formatting --directory=libs/web/shared --standalone` (consolidated into single shared lib)
+- [X] T046 [P] Create HTTP client service in libs/web/shared/src/lib/http/http-client.service.ts
+- [X] T047 [P] Create API interceptor for error handling in libs/web/shared/src/lib/http/api.interceptor.ts
+- [X] T048 [P] Implement i18n service with Arabic/English support in libs/web/shared/src/lib/i18n/i18n.service.ts
+- [X] T049 [P] Create translation JSON files in apps/web/src/assets/i18n/ar.json and en.json
+- [X] T050 [P] Implement date formatting utility with locale support in libs/web/shared/src/lib/formatting/date-format.pipe.ts
+- [X] T051 Configure Angular SSR with provideClientHydration in apps/web/src/app/app.config.ts
+- [X] T052 Configure i18n providers in apps/web/src/app/app.config.ts
+- [X] T053 Create RTL-aware layout wrapper component in libs/web/shared/src/lib/layout/layout.component.ts
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
@@ -116,13 +116,13 @@ Based on plan.md Nx monorepo structure:
 
 ### Implementation for User Story 11
 
-- [ ] T054 [US11] Implement language detection service in libs/web/shared/util-i18n/src/lib/language-detector.service.ts
-- [ ] T055 [US11] Create language switcher component in libs/web/shared/ui-layout/src/lib/language-switcher/language-switcher.component.ts
-- [ ] T056 [US11] Implement URL-based language routing with /ar/ and /en/ prefixes in apps/web/src/app/app.routes.ts
-- [ ] T057 [US11] Add dir attribute binding (rtl/ltr) to layout wrapper in libs/web/shared/ui-layout/src/lib/layout/layout.component.ts
-- [ ] T058 [US11] Configure CSS logical properties base styles in apps/web/src/styles.scss
-- [ ] T059 [US11] Create LTR code block directive for maintaining LTR in code blocks in libs/web/shared/ui/src/lib/directives/ltr-code.directive.ts
-- [ ] T060 [US11] Implement server-side language detection in apps/web/server.ts
+- [X] T054 [US11] Implement language detection service in libs/web/shared/src/lib/i18n/language-detector.service.ts
+- [X] T055 [US11] Create language switcher component in libs/web/shared/src/lib/ui/language-switcher/language-switcher.component.ts
+- [X] T056 [US11] Implement URL-based language routing with /ar/ and /en/ prefixes in apps/web/src/app/app.routes.ts
+- [X] T057 [US11] Add dir attribute binding (rtl/ltr) to layout wrapper in libs/web/shared/src/lib/layout/layout.component.ts
+- [X] T058 [US11] Configure CSS logical properties base styles in apps/web/src/styles.scss
+- [X] T059 [US11] Create LTR code block directive for maintaining LTR in code blocks in libs/web/shared/src/lib/directives/ltr-code.directive.ts
+- [X] T060 [US11] Implement server-side language detection in apps/web/server.ts
 
 **Checkpoint**: Bilingual infrastructure complete - all pages can now be built with i18n support
 
@@ -136,21 +136,21 @@ Based on plan.md Nx monorepo structure:
 
 ### Implementation for User Story 5
 
-- [ ] T061 [P] [US5] Create login DTO in libs/api/core/src/lib/auth/dto/login.dto.ts
-- [ ] T062 [P] [US5] Create auth response DTO in libs/api/core/src/lib/auth/dto/auth-response.dto.ts
-- [ ] T063 [US5] Implement AuthService with login, refresh, logout in libs/api/core/src/lib/auth/auth.service.ts
-- [ ] T064 [US5] Implement JwtStrategy for Passport in libs/api/core/src/lib/auth/jwt.strategy.ts
-- [ ] T065 [US5] Implement RefreshTokenStrategy in libs/api/core/src/lib/auth/refresh.strategy.ts
-- [ ] T066 [US5] Create JwtAuthGuard in libs/api/core/src/lib/guards/jwt-auth.guard.ts
-- [ ] T067 [US5] Create AuthController with /auth/login, /auth/refresh, /auth/logout in libs/api/core/src/lib/auth/auth.controller.ts
-- [ ] T068 [US5] Configure HttpOnly cookie settings in AuthService
-- [ ] T069 [US5] Create AuthModule in libs/api/core/src/lib/auth/auth.module.ts
-- [ ] T070 Generate dashboard feature-shell library: `nx g @nx/angular:lib feature-shell --directory=libs/web/dashboard --standalone --routing`
-- [ ] T071 [P] [US5] Create login page component in libs/web/dashboard/feature-shell/src/lib/login/login.component.ts
-- [ ] T072 [P] [US5] Create auth service (frontend) in libs/web/shared/data-access/src/lib/auth.service.ts
-- [ ] T073 [US5] Create auth guard for dashboard routes in libs/web/shared/data-access/src/lib/auth.guard.ts
-- [ ] T074 [US5] Implement token refresh interceptor in libs/web/shared/data-access/src/lib/token-refresh.interceptor.ts
-- [ ] T075 [US5] Configure dashboard routes with auth guard in libs/web/dashboard/feature-shell/src/lib/dashboard.routes.ts
+- [X] T061 [P] [US5] Create login DTO in libs/api/core/src/lib/auth/dto/login.dto.ts
+- [X] T062 [P] [US5] Create auth response DTO in libs/api/core/src/lib/auth/dto/auth-response.dto.ts
+- [X] T063 [US5] Implement AuthService with login, refresh, logout in libs/api/core/src/lib/auth/auth.service.ts
+- [X] T064 [US5] Implement JwtStrategy for Passport in libs/api/core/src/lib/auth/jwt.strategy.ts
+- [X] T065 [US5] Implement RefreshTokenStrategy in libs/api/core/src/lib/auth/refresh.strategy.ts
+- [X] T066 [US5] Create JwtAuthGuard in libs/api/core/src/lib/guards/jwt-auth.guard.ts
+- [X] T067 [US5] Create AuthController with /auth/login, /auth/refresh, /auth/logout in libs/api/core/src/lib/auth/auth.controller.ts
+- [X] T068 [US5] Configure HttpOnly cookie settings in AuthService
+- [X] T069 [US5] Create AuthModule in libs/api/core/src/lib/auth/auth.module.ts
+- [X] T070 Generate dashboard feature-shell library (implemented as pages/dashboard in app for simplicity)
+- [X] T071 [P] [US5] Create login page component in apps/web/src/app/pages/dashboard/login/login.component.ts
+- [X] T072 [P] [US5] Create auth service (frontend) in libs/web/shared/src/lib/auth/auth.service.ts
+- [X] T073 [US5] Create auth guard for dashboard routes in libs/web/shared/src/lib/auth/auth.guard.ts
+- [X] T074 [US5] Implement token refresh interceptor in libs/web/shared/src/lib/auth/token-refresh.interceptor.ts
+- [X] T075 [US5] Configure dashboard routes with auth guard in apps/web/src/app/pages/dashboard/dashboard.routes.ts
 
 **Checkpoint**: Admin can login/logout, protected routes work
 
@@ -166,23 +166,23 @@ Based on plan.md Nx monorepo structure:
 
 ### Implementation for User Story 9
 
-- [ ] T076 [P] [US9] Create upload DTO with file validation in libs/api/media/src/lib/file/dto/upload.dto.ts
-- [ ] T077 [P] [US9] Create media metadata DTO in libs/api/media/src/lib/file/dto/update-metadata.dto.ts
-- [ ] T078 [P] [US9] Create folder DTO in libs/api/media/src/lib/folder/dto/create-folder.dto.ts
-- [ ] T079 [US9] Implement MediaFileService with upload, optimize, delete in libs/api/media/src/lib/file/file.service.ts
-- [ ] T080 [US9] Implement Sharp image optimization (WebP, thumbnails) in libs/api/media/src/lib/file/image-optimizer.service.ts
-- [ ] T081 [US9] Implement MediaFolderService with CRUD in libs/api/media/src/lib/folder/folder.service.ts
-- [ ] T082 [US9] Create MediaFileController with upload, list, update, delete in libs/api/media/src/lib/file/file.controller.ts
-- [ ] T083 [US9] Create MediaFolderController in libs/api/media/src/lib/folder/folder.controller.ts
-- [ ] T084 [US9] Create MediaModule in libs/api/media/src/lib/media.module.ts
-- [ ] T085 [US9] Configure multer for file uploads with 10MB limit in libs/api/media/src/lib/file/file.controller.ts
-- [ ] T086 Generate dashboard feature-media library: `nx g @nx/angular:lib feature-media --directory=libs/web/dashboard --standalone`
-- [ ] T087 [P] [US9] Create media data-access service in libs/web/dashboard/data-access/src/lib/media.service.ts
-- [ ] T088 [US9] Create media library grid component in libs/web/dashboard/feature-media/src/lib/media-grid/media-grid.component.ts
-- [ ] T089 [US9] Create upload dropzone component in libs/web/dashboard/feature-media/src/lib/upload-dropzone/upload-dropzone.component.ts
-- [ ] T090 [US9] Create media detail panel with metadata editing in libs/web/dashboard/feature-media/src/lib/media-detail/media-detail.component.ts
-- [ ] T091 [US9] Create folder tree component in libs/web/dashboard/feature-media/src/lib/folder-tree/folder-tree.component.ts
-- [ ] T092 [US9] Create media picker modal for insertion into content in libs/web/dashboard/ui/src/lib/media-picker/media-picker.component.ts
+- [X] T076 [P] [US9] Create upload DTO with file validation in libs/api/media/src/lib/file/dto/upload.dto.ts
+- [X] T077 [P] [US9] Create media metadata DTO in libs/api/media/src/lib/file/dto/update-metadata.dto.ts
+- [X] T078 [P] [US9] Create folder DTO in libs/api/media/src/lib/folder/dto/create-folder.dto.ts
+- [X] T079 [US9] Implement MediaFileService with upload, optimize, delete in libs/api/media/src/lib/file/file.service.ts
+- [X] T080 [US9] Implement Sharp image optimization (WebP, thumbnails) in libs/api/media/src/lib/file/image-optimizer.service.ts
+- [X] T081 [US9] Implement MediaFolderService with CRUD in libs/api/media/src/lib/folder/folder.service.ts
+- [X] T082 [US9] Create MediaFileController with upload, list, update, delete in libs/api/media/src/lib/file/file.controller.ts
+- [X] T083 [US9] Create MediaFolderController in libs/api/media/src/lib/folder/folder.controller.ts
+- [X] T084 [US9] Create MediaModule in libs/api/media/src/lib/media.module.ts
+- [X] T085 [US9] Configure multer for file uploads with 10MB limit in libs/api/media/src/lib/file/file.controller.ts
+- [X] T086 Media components consolidated into libs/web/shared (no separate feature library needed)
+- [X] T087 [P] [US9] Create media data-access service in libs/web/shared/src/lib/media/media.service.ts
+- [X] T088 [US9] Create media library grid component in libs/web/shared/src/lib/media/media-grid.component.ts
+- [X] T089 [US9] Create upload dropzone component in libs/web/shared/src/lib/media/upload-dropzone.component.ts
+- [X] T090 [US9] Create media detail panel with metadata editing in libs/web/shared/src/lib/media/media-detail.component.ts
+- [X] T091 [US9] Create folder tree component in libs/web/shared/src/lib/media/folder-tree.component.ts
+- [X] T092 [US9] Create media picker modal for insertion into content in libs/web/shared/src/lib/media/media-picker.component.ts
 
 **Checkpoint**: Media library fully functional - images can be uploaded, organized, and metadata edited
 

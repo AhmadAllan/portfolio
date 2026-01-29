@@ -21,7 +21,7 @@
       "@portfolio/garden": ["libs/api/garden/src/index.ts"],
       "@portfolio/portfolio": ["libs/api/portfolio/src/index.ts"],
       "@portfolio/media": ["libs/api/media/src/index.ts"],
-      "@portfolio/data-access": ["libs/web/shared/src/index.ts"]
+      "@portfolio/web-shared": ["libs/web/shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
