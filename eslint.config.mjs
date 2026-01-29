@@ -5,7 +5,7 @@ export default [
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
   {
-    ignores: ['**/dist', '**/out-tsc'],
+    ignores: ['**/dist', '**/out-tsc', '**/vitest.config.*.timestamp*'],
   },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
@@ -19,28 +19,33 @@ export default [
             // Library type dependency rules
             {
               sourceTag: 'type:feature',
-              onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'scope:shared']
+              onlyDependOnLibsWithTags: [
+                'type:data-access',
+                'type:ui',
+                'type:util',
+                'scope:shared',
+              ],
             },
             {
               sourceTag: 'type:ui',
-              onlyDependOnLibsWithTags: ['type:util', 'scope:shared']
+              onlyDependOnLibsWithTags: ['type:util', 'scope:shared'],
             },
             {
               sourceTag: 'type:data-access',
-              onlyDependOnLibsWithTags: ['type:util', 'scope:shared']
+              onlyDependOnLibsWithTags: ['type:util', 'scope:shared'],
             },
             {
               sourceTag: 'type:util',
-              onlyDependOnLibsWithTags: ['scope:shared']
+              onlyDependOnLibsWithTags: ['scope:shared'],
             },
             // Scope boundary rules
             {
               sourceTag: 'scope:web',
-              notDependOnLibsWithTags: ['scope:api']
+              notDependOnLibsWithTags: ['scope:api'],
             },
             {
               sourceTag: 'scope:api',
-              notDependOnLibsWithTags: ['scope:web']
+              notDependOnLibsWithTags: ['scope:web'],
             },
           ],
         },

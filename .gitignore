@@ -53,3 +53,5 @@ speckit-constitution.md
 .angular
 
 __screenshots__/
+
+vitest.config.*.timestamp*

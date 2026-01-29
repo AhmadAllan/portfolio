@@ -1,7 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Module, Global } from '@nestjs/common';
+import { AppConfigModule } from './config/config.module';
 
+@Global()
 @Module({
-  controllers: [],
+  imports: [AppConfigModule],
   providers: [],
   exports: [],
 })

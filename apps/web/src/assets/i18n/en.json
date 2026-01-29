@@ -1,0 +1,19 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search"
+  },
+  "nav": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "garden": "Garden",
+    "dashboard": "Dashboard"
+  }
+}
