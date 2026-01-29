@@ -42,13 +42,13 @@ Thumbs.db
 .nx/workspace-data
 
 # AI generated files
-.specify
-.claude
-specs
-
-CLAUDE.md
-lovecraftian-portfolio-prd.md
-speckit-constitution.md
+#.specify
+#.claude
+#specs
+#
+#CLAUDE.md
+#lovecraftian-portfolio-prd.md
+#speckit-constitution.md
 
 .angular
 
