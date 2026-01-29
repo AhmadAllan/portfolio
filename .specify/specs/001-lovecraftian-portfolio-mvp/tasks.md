@@ -196,22 +196,22 @@ Based on plan.md Nx monorepo structure:
 
 ### Implementation for User Story 8
 
-- [ ] T093 [P] [US8] Create About DTOs in libs/api/portfolio/src/lib/about/dto/
-- [ ] T094 [P] [US8] Create Project DTOs in libs/api/portfolio/src/lib/project/dto/
-- [ ] T095 [P] [US8] Create Experience DTOs in libs/api/portfolio/src/lib/experience/dto/
-- [ ] T096 [P] [US8] Create Skill DTOs in libs/api/portfolio/src/lib/skill/dto/
-- [ ] T097 [P] [US8] Create Education DTOs in libs/api/portfolio/src/lib/education/dto/
-- [ ] T098 [US8] Implement AboutService in libs/api/portfolio/src/lib/about/about.service.ts
-- [ ] T099 [US8] Implement ProjectService in libs/api/portfolio/src/lib/project/project.service.ts
-- [ ] T100 [US8] Implement ExperienceService in libs/api/portfolio/src/lib/experience/experience.service.ts
-- [ ] T101 [US8] Implement SkillService in libs/api/portfolio/src/lib/skill/skill.service.ts
-- [ ] T102 [US8] Implement EducationService in libs/api/portfolio/src/lib/education/education.service.ts
-- [ ] T103 [P] [US8] Create AboutController in libs/api/portfolio/src/lib/about/about.controller.ts
-- [ ] T104 [P] [US8] Create ProjectController in libs/api/portfolio/src/lib/project/project.controller.ts
-- [ ] T105 [P] [US8] Create ExperienceController in libs/api/portfolio/src/lib/experience/experience.controller.ts
-- [ ] T106 [P] [US8] Create SkillController in libs/api/portfolio/src/lib/skill/skill.controller.ts
-- [ ] T107 [P] [US8] Create EducationController in libs/api/portfolio/src/lib/education/education.controller.ts
-- [ ] T108 [US8] Create PortfolioModule in libs/api/portfolio/src/lib/portfolio.module.ts
+- [X] T093 [P] [US8] Create About DTOs in libs/api/portfolio/src/lib/about/dto/
+- [X] T094 [P] [US8] Create Project DTOs in libs/api/portfolio/src/lib/project/dto/
+- [X] T095 [P] [US8] Create Experience DTOs in libs/api/portfolio/src/lib/experience/dto/
+- [X] T096 [P] [US8] Create Skill DTOs in libs/api/portfolio/src/lib/skill/dto/
+- [X] T097 [P] [US8] Create Education DTOs in libs/api/portfolio/src/lib/education/dto/
+- [X] T098 [US8] Implement AboutService in libs/api/portfolio/src/lib/about/about.service.ts
+- [X] T099 [US8] Implement ProjectService in libs/api/portfolio/src/lib/project/project.service.ts
+- [X] T100 [US8] Implement ExperienceService in libs/api/portfolio/src/lib/experience/experience.service.ts
+- [X] T101 [US8] Implement SkillService in libs/api/portfolio/src/lib/skill/skill.service.ts
+- [X] T102 [US8] Implement EducationService in libs/api/portfolio/src/lib/education/education.service.ts
+- [X] T103 [P] [US8] Create AboutController in libs/api/portfolio/src/lib/about/about.controller.ts
+- [X] T104 [P] [US8] Create ProjectController in libs/api/portfolio/src/lib/project/project.controller.ts
+- [X] T105 [P] [US8] Create ExperienceController in libs/api/portfolio/src/lib/experience/experience.controller.ts
+- [X] T106 [P] [US8] Create SkillController in libs/api/portfolio/src/lib/skill/skill.controller.ts
+- [X] T107 [P] [US8] Create EducationController in libs/api/portfolio/src/lib/education/education.controller.ts
+- [X] T108 [US8] Create PortfolioModule in libs/api/portfolio/src/lib/portfolio.module.ts
 - [ ] T109 Generate dashboard feature-portfolio library: `nx g @nx/angular:lib feature-portfolio --directory=libs/web/dashboard --standalone`
 - [ ] T110 [P] [US8] Create portfolio data-access service in libs/web/dashboard/data-access/src/lib/portfolio.service.ts
 - [ ] T111 [US8] Create About editor component in libs/web/dashboard/feature-portfolio/src/lib/about-editor/about-editor.component.ts
