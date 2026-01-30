@@ -50,6 +50,10 @@ Thumbs.db
 #lovecraftian-portfolio-prd.md
 #speckit-constitution.md
 
+# Environment variables
+.env
+
+# Angular
 .angular
 
 __screenshots__/
