@@ -54,7 +54,7 @@ Based on plan.md Nx monorepo structure:
 ### Database & Schema
 
 - [X] T016 Configure Drizzle ORM connection in libs/api/core/src/lib/database/drizzle.config.ts
-- [ ] T017 Create PostgreSQL database and configure DATABASE_URL in .env
+- [X] T017 Create PostgreSQL database and configure DATABASE_URL in .env
 - [X] T018 [P] Define User entity schema in libs/api/core/src/lib/database/schema/user.schema.ts
 - [X] T019 [P] Define Post, Category, Tag, Series schemas in libs/api/core/src/lib/database/schema/blog.schema.ts
 - [X] T020 [P] Define Comment schema in libs/api/core/src/lib/database/schema/blog.schema.ts
@@ -62,7 +62,7 @@ Based on plan.md Nx monorepo structure:
 - [X] T022 [P] Define Project, Experience, Skill, Education, About schemas in libs/api/core/src/lib/database/schema/portfolio.schema.ts
 - [X] T023 [P] Define MediaFile, MediaFolder schemas in libs/api/core/src/lib/database/schema/media.schema.ts
 - [X] T024 Create schema index file exporting all tables in libs/api/core/src/lib/database/schema/index.ts
-- [ ] T025 Run initial database migration with drizzle-kit push
+- [X] T025 Run initial database migration with drizzle-kit push
 
 ### Shared Types
 
