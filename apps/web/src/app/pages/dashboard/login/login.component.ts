@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AuthService } from '@portfolio/web-shared';
 
 @Component({
@@ -137,25 +138,36 @@ export class LoginComponent {
   error = '';
   isLoading = false;
 
+  private destroyRef = inject(DestroyRef);
+
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
 
   onSubmit(): void {
-    if (this.isLoading) return;
+    if (this.isLoading) {
+      return;
+    }
 
     this.error = '';
     this.isLoading = true;
 
-    this.authService.login({ email: this.email, password: this.password }).subscribe({
-      next: () => {
-        this.router.navigate(['/dashboard']);
-      },
-      error: (err) => {
-        this.isLoading = false;
-        this.error = err.error?.data?.message || 'Invalid email or password';
-      },
+    const subscription = this.authService
+      .login({ email: this.email, password: this.password })
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/dashboard']);
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.error = err.error?.data?.message || 'Invalid email or password';
+        },
+      });
+
+    // Cleanup subscription if component is destroyed before login completes
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
     });
   }
 }

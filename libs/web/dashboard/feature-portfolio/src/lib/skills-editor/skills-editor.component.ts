@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PortfolioService, ISkill } from '@portfolio/dashboard/data-access';
@@ -17,6 +17,8 @@ export class SkillsEditorComponent implements OnInit {
   saving = false;
   error: string | null = null;
   editingId: string | null = null;
+
+  private destroyRef = inject(DestroyRef);
 
   constructor(
     private readonly portfolioService: PortfolioService,
@@ -38,16 +40,17 @@ export class SkillsEditorComponent implements OnInit {
   loadSkills(): void {
     this.loading = true;
     this.error = null;
-    this.portfolioService.getSkills().subscribe({
+    const subscription = this.portfolioService.getSkills().subscribe({
       next: (data) => {
         this.skills = data;
         this.loading = false;
       },
-      error: (err) => {
+      error: (_err) => {
         this.error = 'Failed to load skills';
         this.loading = false;
       }
     });
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   editSkill(skill: ISkill): void {
@@ -78,16 +81,17 @@ export class SkillsEditorComponent implements OnInit {
       displayOrder: this.skillsForm.value.displayOrder!
     };
 
-    this.portfolioService.createSkill(data).subscribe({
+    const subscription = this.portfolioService.createSkill(data).subscribe({
       next: () => {
         this.saving = false;
         this.loadSkills();
       },
-      error: (err) => {
+      error: (_err) => {
         this.error = 'Failed to create skill';
         this.saving = false;
       }
     });
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   updateSkill(): void {
@@ -107,28 +111,30 @@ export class SkillsEditorComponent implements OnInit {
       displayOrder: this.skillsForm.value.displayOrder!
     };
 
-    this.portfolioService.updateSkill(this.editingId!, data).subscribe({
+    const subscription = this.portfolioService.updateSkill(this.editingId!, data).subscribe({
       next: () => {
         this.saving = false;
         this.editingId = null;
         this.loadSkills();
       },
-      error: (err) => {
+      error: (_err) => {
         this.error = 'Failed to update skill';
         this.saving = false;
       }
     });
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   deleteSkill(id: string): void {
-    this.portfolioService.deleteSkill(id).subscribe({
+    const subscription = this.portfolioService.deleteSkill(id).subscribe({
       next: () => {
         this.loadSkills();
       },
-      error: (err) => {
+      error: (_err) => {
         this.error = 'Failed to delete skill';
       }
     });
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   cancelEdit(): void {

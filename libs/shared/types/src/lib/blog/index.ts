@@ -65,3 +65,6 @@ export interface ISeries {
   // Relations
   posts?: IPost[];
 }
+
+// Export DTOs
+export * from './dto';

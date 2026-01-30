@@ -45,19 +45,41 @@ export class EducationService {
       throw new NotFoundException('Education not found');
     }
 
-    const updateData: any = {};
+    const updateData: Partial<typeof educations.$inferInsert> = {};
 
-    if (dto.institution !== undefined) updateData.institution = dto.institution;
-    if (dto.institutionEn !== undefined) updateData.institutionEn = dto.institutionEn;
-    if (dto.degree !== undefined) updateData.degree = dto.degree;
-    if (dto.degreeEn !== undefined) updateData.degreeEn = dto.degreeEn;
-    if (dto.field !== undefined) updateData.field = dto.field;
-    if (dto.fieldEn !== undefined) updateData.fieldEn = dto.fieldEn;
-    if (dto.description !== undefined) updateData.description = dto.description;
-    if (dto.descriptionEn !== undefined) updateData.descriptionEn = dto.descriptionEn;
-    if (dto.year !== undefined) updateData.year = dto.year;
-    if (dto.type !== undefined) updateData.isCertification = dto.type === 'certification';
-    if (dto.displayOrder !== undefined) updateData.order = dto.displayOrder;
+    if (dto.institution !== undefined) {
+      updateData.institution = dto.institution;
+    }
+    if (dto.institutionEn !== undefined) {
+      updateData.institutionEn = dto.institutionEn;
+    }
+    if (dto.degree !== undefined) {
+      updateData.degree = dto.degree;
+    }
+    if (dto.degreeEn !== undefined) {
+      updateData.degreeEn = dto.degreeEn;
+    }
+    if (dto.field !== undefined) {
+      updateData.field = dto.field;
+    }
+    if (dto.fieldEn !== undefined) {
+      updateData.fieldEn = dto.fieldEn;
+    }
+    if (dto.description !== undefined) {
+      updateData.description = dto.description;
+    }
+    if (dto.descriptionEn !== undefined) {
+      updateData.descriptionEn = dto.descriptionEn;
+    }
+    if (dto.year !== undefined) {
+      updateData.year = dto.year;
+    }
+    if (dto.type !== undefined) {
+      updateData.isCertification = dto.type === 'certification';
+    }
+    if (dto.displayOrder !== undefined) {
+      updateData.order = dto.displayOrder;
+    }
 
     const [result] = await db
       .update(educations)

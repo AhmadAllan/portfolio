@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '@portfolio/web-shared';
@@ -122,9 +122,12 @@ import { AuthService } from '@portfolio/web-shared';
   `],
 })
 export class DashboardShellComponent {
+  private destroyRef = inject(DestroyRef);
+
   constructor(private authService: AuthService) {}
 
   logout(): void {
-    this.authService.logout().subscribe();
+    const subscription = this.authService.logout().subscribe();
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 }

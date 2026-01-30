@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AuthService, AuthUser } from '@portfolio/web-shared';
 
 @Component({
@@ -74,11 +75,16 @@ import { AuthService, AuthUser } from '@portfolio/web-shared';
 export class OverviewComponent implements OnInit {
   user: AuthUser | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    // Subscribe in constructor to use takeUntilDestroyed
+    this.authService.currentUser$
+      .pipe(takeUntilDestroyed())
+      .subscribe((user) => {
+        this.user = user;
+      });
+  }
 
   ngOnInit(): void {
-    this.authService.currentUser$.subscribe((user) => {
-      this.user = user;
-    });
+    // Lifecycle hook for other initialization if needed
   }
 }

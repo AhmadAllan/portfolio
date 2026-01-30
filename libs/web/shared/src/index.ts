@@ -1,6 +1,16 @@
+// Configuration
+export * from './lib/config/environment.token';
+
 // HTTP
 export * from './lib/http/http-client.service';
 export * from './lib/http/api.interceptor';
+
+// Interceptors
+export * from './lib/interceptors/error.interceptor';
+
+// Services
+export * from './lib/services/notification.service';
+export * from './lib/services/global-error-handler';
 
 // Auth
 export * from './lib/auth';
@@ -23,6 +33,9 @@ export * from './lib/media';
 
 // Directives
 export * from './lib/directives/ltr-code.directive';
+
+// Utils
+export * from './lib/utils/sanitize';
 
 export * from './lib/cthulhu-canvas';
 

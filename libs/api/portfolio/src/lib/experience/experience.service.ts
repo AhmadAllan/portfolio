@@ -55,21 +55,47 @@ export class ExperienceService {
       throw new NotFoundException('Experience not found');
     }
 
-    const updateData: any = {};
+    const updateData: Partial<typeof experiences.$inferInsert> = {};
 
-    if (dto.company !== undefined) updateData.company = dto.company;
-    if (dto.companyEn !== undefined) updateData.companyEn = dto.companyEn;
-    if (dto.title !== undefined) updateData.title = dto.title;
-    if (dto.titleEn !== undefined) updateData.titleEn = dto.titleEn;
-    if (dto.location !== undefined) updateData.location = dto.location;
-    if (dto.locationEn !== undefined) updateData.locationEn = dto.locationEn;
-    if (dto.employmentType !== undefined) updateData.type = dto.employmentType;
-    if (dto.startDate !== undefined) updateData.startDate = new Date(dto.startDate);
-    if (dto.endDate !== undefined) updateData.endDate = dto.endDate ? new Date(dto.endDate) : null;
-    if (dto.current !== undefined) updateData.isCurrent = dto.current;
-    if (dto.description !== undefined) updateData.description = dto.description;
-    if (dto.descriptionEn !== undefined) updateData.descriptionEn = dto.descriptionEn;
-    if (dto.displayOrder !== undefined) updateData.order = dto.displayOrder;
+    if (dto.company !== undefined) {
+      updateData.company = dto.company;
+    }
+    if (dto.companyEn !== undefined) {
+      updateData.companyEn = dto.companyEn;
+    }
+    if (dto.title !== undefined) {
+      updateData.title = dto.title;
+    }
+    if (dto.titleEn !== undefined) {
+      updateData.titleEn = dto.titleEn;
+    }
+    if (dto.location !== undefined) {
+      updateData.location = dto.location;
+    }
+    if (dto.locationEn !== undefined) {
+      updateData.locationEn = dto.locationEn;
+    }
+    if (dto.employmentType !== undefined) {
+      updateData.type = dto.employmentType;
+    }
+    if (dto.startDate !== undefined) {
+      updateData.startDate = new Date(dto.startDate);
+    }
+    if (dto.endDate !== undefined) {
+      updateData.endDate = dto.endDate ? new Date(dto.endDate) : null;
+    }
+    if (dto.current !== undefined) {
+      updateData.isCurrent = dto.current;
+    }
+    if (dto.description !== undefined) {
+      updateData.description = dto.description;
+    }
+    if (dto.descriptionEn !== undefined) {
+      updateData.descriptionEn = dto.descriptionEn;
+    }
+    if (dto.displayOrder !== undefined) {
+      updateData.order = dto.displayOrder;
+    }
 
     const [result] = await db
       .update(experiences)

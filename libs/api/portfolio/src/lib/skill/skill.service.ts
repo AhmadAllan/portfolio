@@ -47,13 +47,23 @@ export class SkillService {
       throw new NotFoundException('Skill not found');
     }
 
-    const updateData: any = {};
+    const updateData: Partial<typeof skills.$inferInsert> = {};
 
-    if (dto.name !== undefined) updateData.name = dto.name;
-    if (dto.nameEn !== undefined) updateData.nameEn = dto.nameEn;
-    if (dto.category !== undefined) updateData.category = dto.category;
-    if (dto.icon !== undefined) updateData.icon = dto.icon;
-    if (dto.displayOrder !== undefined) updateData.order = dto.displayOrder;
+    if (dto.name !== undefined) {
+      updateData.name = dto.name;
+    }
+    if (dto.nameEn !== undefined) {
+      updateData.nameEn = dto.nameEn;
+    }
+    if (dto.category !== undefined) {
+      updateData.category = dto.category;
+    }
+    if (dto.icon !== undefined) {
+      updateData.icon = dto.icon;
+    }
+    if (dto.displayOrder !== undefined) {
+      updateData.order = dto.displayOrder;
+    }
 
     const [result] = await db
       .update(skills)

@@ -1,91 +1,397 @@
 # Portfolio
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+A modern, full-stack portfolio application built with Angular 19 and NestJS 11, following best practices and OWASP security standards.
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+## Features
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+- Bilingual support (Arabic/English)
+- Lovecraftian-themed UI
+- Comprehensive admin dashboard
+- Type-safe API with JSend response pattern
+- JWT authentication with refresh tokens
+- PostgreSQL database with Drizzle ORM
+- Monorepo architecture with Nx
 
-## Generate a library
+## Architecture
 
-```sh
-npx nx g @nx/js:lib packages/pkg1 --publishable --importPath=@my-org/pkg1
+This project uses an Nx monorepo structure with the following key components:
+
+```text
+apps/
+├── api/              # NestJS backend application
+└── web/              # Angular frontend application
+
+libs/
+├── api/              # Backend libraries
+│   ├── core/         # Core services (auth, config, logging, middleware)
+│   └── portfolio/    # Portfolio domain logic
+├── web/              # Frontend libraries
+│   ├── shared/       # Shared UI components and services
+│   ├── portfolio/    # Portfolio feature
+│   ├── landing/      # Landing page
+│   └── dashboard/    # Admin dashboard
+└── shared/
+    └── types/        # Shared TypeScript interfaces
 ```
 
-## Run tasks
+## Tech Stack
 
-To build the library use:
+**Frontend:**
+- Angular 19+ (standalone components, signals, modern control flow)
+- TypeScript 5.x (strict mode)
+- TailwindCSS
+- RxJS with proper subscription management
 
-```sh
-npx nx build pkg1
+**Backend:**
+- NestJS 11
+- TypeScript 5.x (strict mode)
+- Drizzle ORM
+- PostgreSQL
+- JWT authentication
+- class-validator for input validation
+
+**Development:**
+- Nx monorepo
+- ESLint + Prettier
+- Git hooks (future)
+
+## Prerequisites
+
+- Node.js 18+ and npm/yarn
+- PostgreSQL 14+
+- Git
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd portfolio
 ```
 
-To run any task with Nx use:
-
-```sh
-npx nx <target> <project-name>
+2. Install dependencies:
+```bash
+npm install
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+3. Set up environment variables:
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+**Backend (.env):**
+```bash
+# Copy the example file
+cp .env.example .env
 
-## Versioning and releasing
-
-To version and release the library use
-
-```
-npx nx release
-```
-
-Pass `--dry-run` to see what would happen without actually releasing the library.
-
-[Learn more about Nx release &raquo;](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-
-## Set up CI!
-
-### Step 1
-
-To connect to Nx Cloud, run the following command:
-
-```sh
-npx nx connect
+# Edit .env with your values
+# Required variables:
+NODE_ENV=development
+PORT=3000
+API_PREFIX=api/v1
+FRONTEND_URL=http://localhost:4200
+DATABASE_URL=postgresql://user:password@localhost:5432/portfolio
+JWT_SECRET=your-secret-here-min-32-chars
+JWT_REFRESH_SECRET=your-refresh-secret-here-min-32-chars
+JWT_ACCESS_EXPIRATION=15m
+JWT_REFRESH_EXPIRATION=7d
+CORS_ORIGIN=http://localhost:4200
+COOKIE_DOMAIN=localhost
+UPLOAD_DIR=./uploads
+MAX_FILE_SIZE=10485760
 ```
 
-Connecting to Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
+**Frontend (apps/web/src/environments/):**
+- `environment.development.ts` - Development configuration
+- `environment.production.ts` - Production configuration
 
-- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+4. Set up the database:
+```bash
+# Run migrations
+npm run db:migrate
 
-### Step 2
-
-Use the following command to configure a CI workflow for your workspace:
-
-```sh
-npx nx g ci-workflow
+# (Optional) Seed database
+npm run db:seed
 ```
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+## Development
 
-## Install Nx Console
+### Start Development Servers
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+**Both frontend and backend:**
+```bash
+npm run dev
+```
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+**Backend only:**
+```bash
+npx nx serve api
+```
 
-## Useful links
+**Frontend only:**
+```bash
+npx nx serve web
+```
 
-Learn more:
+The application will be available at:
+- Frontend: http://localhost:4200
+- Backend API: http://localhost:3000/api/v1
 
-- [Learn more about this workspace setup](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### Project Graph
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Visualize the project structure and dependencies:
+```bash
+npx nx graph
+```
+
+## Building
+
+**Build all projects:**
+```bash
+npm run build
+```
+
+**Build specific project:**
+```bash
+npx nx build api
+npx nx build web
+```
+
+**Production build:**
+```bash
+npx nx build api --configuration=production
+npx nx build web --configuration=production
+```
+
+## Testing
+
+**Run all tests:**
+```bash
+npm test
+```
+
+**Run specific project tests:**
+```bash
+npx nx test api
+npx nx test web
+```
+
+**Run with coverage:**
+```bash
+npx nx test api --coverage
+```
+
+## Linting
+
+**Lint all projects:**
+```bash
+npm run lint
+```
+
+**Lint specific project:**
+```bash
+npx nx lint api
+npx nx lint web
+```
+
+**Auto-fix issues:**
+```bash
+npx nx lint api --fix
+```
+
+## Code Quality
+
+This project follows modern Angular and NestJS best practices:
+
+- **TypeScript Strict Mode**: Full type safety with all strict compiler options enabled
+- **Modern Angular Syntax**: Uses @if/@for/@switch control flow (Angular 17+)
+- **Memory Safety**: Proper RxJS subscription management with takeUntilDestroyed/DestroyRef
+- **Input Validation**: Backend DTOs with class-validator decorators
+- **Error Handling**: Centralized error logging and user notifications
+- **Security**: OWASP Top 10 coverage, input sanitization, secure cookies, CSRF protection
+- **Environment Config**: No hardcoded values, Joi validation on startup
+
+See [docs/REFACTORING-SUMMARY.md](docs/REFACTORING-SUMMARY.md) for detailed improvements.
+
+## Documentation
+
+- [Refactoring Summary](docs/REFACTORING-SUMMARY.md) - Complete overview of all improvements
+- [Architecture Decision Records (ADRs)](docs/adr/) - Key architectural decisions
+  - [ADR 001: Angular Control Flow Migration](docs/adr/001-angular-control-flow-migration.md)
+  - [ADR 002: Environment-Based Configuration](docs/adr/002-environment-based-configuration.md)
+  - [ADR 003: RxJS Subscription Management](docs/adr/003-rxjs-subscription-management.md)
+- [Subscription Management Guide](libs/web/shared/src/lib/utils/subscription-management.md)
+
+## Security
+
+This project implements OWASP Top 10 security practices:
+
+- JWT authentication with HttpOnly, Secure cookies
+- CSRF protection (double-submit cookie pattern)
+- Input validation (backend: class-validator, frontend: sanitization utilities)
+- SQL injection prevention (Drizzle ORM parameterized queries)
+- XSS prevention (Angular automatic escaping + manual sanitization)
+- Environment-based secrets management
+- Secure cookie configuration (SameSite, Domain)
+- Rate limiting (TODO)
+- Security headers via Helmet (TODO)
+
+## Environment Variables
+
+### Backend (.env)
+
+| Variable | Description | Required | Default |
+|----------|-------------|----------|---------|
+| NODE_ENV | Environment | Yes | development |
+| PORT | Server port | No | 3000 |
+| API_PREFIX | API route prefix | No | api/v1 |
+| FRONTEND_URL | Frontend URL for CORS | Yes | - |
+| DATABASE_URL | PostgreSQL connection | Yes | - |
+| JWT_SECRET | JWT signing secret (min 32 chars) | Yes | - |
+| JWT_REFRESH_SECRET | Refresh token secret (min 32 chars) | Yes | - |
+| JWT_ACCESS_EXPIRATION | Access token expiry | No | 15m |
+| JWT_REFRESH_EXPIRATION | Refresh token expiry | No | 7d |
+| CORS_ORIGIN | Allowed CORS origins | Yes | - |
+| COOKIE_DOMAIN | Cookie domain | No | localhost |
+| UPLOAD_DIR | File upload directory | No | ./uploads |
+| MAX_FILE_SIZE | Max upload size (bytes) | No | 10485760 |
+
+### Frontend (environment.ts)
+
+```typescript
+{
+  production: boolean;
+  apiUrl: string;
+  apiVersion: string;
+  authCookieDomain?: string;
+  logLevel: 'debug' | 'info' | 'warn' | 'error';
+}
+```
+
+## API Response Format
+
+This project uses the JSend specification for all API responses:
+
+**Success:**
+```json
+{
+  "status": "success",
+  "data": { ... }
+}
+```
+
+**Error:**
+```json
+{
+  "status": "error",
+  "message": "Error message",
+  "code": "ERROR_CODE",
+  "data": { ... }
+}
+```
+
+**Fail (validation errors):**
+```json
+{
+  "status": "fail",
+  "data": {
+    "field": "Validation error message"
+  }
+}
+```
+
+## Database Migrations
+
+**Create a new migration:**
+```bash
+npm run db:generate
+```
+
+**Run migrations:**
+```bash
+npm run db:migrate
+```
+
+**Drop all tables (careful!):**
+```bash
+npm run db:drop
+```
+
+## Common Tasks
+
+**Generate a new Angular component:**
+```bash
+npx nx g @nx/angular:component my-component --project=web-shared
+```
+
+**Generate a new NestJS module:**
+```bash
+npx nx g @nx/nest:module my-module --project=api
+```
+
+**Generate a new library:**
+```bash
+npx nx g @nx/js:library my-lib --directory=libs/shared/my-lib
+```
+
+## Deployment
+
+**Production Checklist:**
+
+- [ ] Set `NODE_ENV=production`
+- [ ] Use strong JWT secrets (32+ characters)
+- [ ] Configure secure `DATABASE_URL`
+- [ ] Set correct `FRONTEND_URL` and `CORS_ORIGIN`
+- [ ] Set `COOKIE_DOMAIN` to your domain
+- [ ] Enable HTTPS (cookies require secure flag)
+- [ ] Configure production logging/monitoring
+- [ ] Set up error tracking (Sentry, LogRocket)
+- [ ] Configure rate limiting
+- [ ] Run database migrations
+- [ ] Build production bundles
+
+**Build for production:**
+```bash
+npm run build:prod
+```
+
+**Run production backend:**
+```bash
+cd dist/apps/api
+NODE_ENV=production node main.js
+```
+
+## Contributing
+
+1. Create a feature branch
+2. Make your changes
+3. Run tests and linting
+4. Submit a pull request
+
+## Troubleshooting
+
+**Database connection errors:**
+- Verify PostgreSQL is running
+- Check `DATABASE_URL` in .env
+- Ensure database exists
+
+**Cookie/CORS issues:**
+- Verify `FRONTEND_URL` matches your dev server
+- Check `COOKIE_DOMAIN` setting
+- For local development, use `localhost` not `127.0.0.1`
+
+**TypeScript errors:**
+- Run `npm install` to ensure all dependencies are installed
+- Check that `tsconfig.base.json` has correct paths
+
+## Learn More
+
+- [Nx Documentation](https://nx.dev)
+- [Angular Documentation](https://angular.dev)
+- [NestJS Documentation](https://docs.nestjs.com)
+- [Drizzle ORM Documentation](https://orm.drizzle.team)
+
+## License
+
+[Add your license here]
+
+## Contact
+
+[Add your contact information here]

@@ -1,14 +1,19 @@
 <div class="about-editor">
-  <div *ngIf="loading" class="loading">
-    <p>Loading about information...</p>
-  </div>
+  @if (loading) {
+    <div class="loading">
+      <p>Loading about information...</p>
+    </div>
+  }
 
-  <div *ngIf="error" class="error">
-    <p class="error-message">{{ error }}</p>
-    <button (click)="loadAbout()" class="retry-button">Retry</button>
-  </div>
+  @if (error) {
+    <div class="error">
+      <p class="error-message">{{ error }}</p>
+      <button (click)="loadAbout()" class="retry-button">Retry</button>
+    </div>
+  }
 
-  <form *ngIf="about && !loading" [formGroup]="aboutForm" (ngSubmit)="saveAbout()" class="about-form">
+  @if (about && !loading) {
+    <form [formGroup]="aboutForm" (ngSubmit)="saveAbout()" class="about-form">
     <div class="form-section">
       <h3>Personal Information</h3>
 
@@ -100,41 +105,43 @@
     <div class="form-section">
       <h3>Social Links</h3>
 
-      <div formGroupName="socialLinks" *ngFor="let linkGroup of socialLinks(); let i = index" class="social-link-row">
-        <div class="form-row">
-          <label [for]="'platform-' + i">Platform</label>
-          <input
-            [id]="'platform-' + i"
-              type="text"
-              formControlName="platform"
-              placeholder="e.g., github, linkedin"
-          />
-        </div>
+      @for (linkGroup of socialLinks(); track $index; let i = $index) {
+        <div formGroupName="socialLinks" class="social-link-row">
+          <div class="form-row">
+            <label [for]="'platform-' + i">Platform</label>
+            <input
+              [id]="'platform-' + i"
+                type="text"
+                formControlName="platform"
+                placeholder="e.g., github, linkedin"
+            />
+          </div>
 
-        <div class="form-row">
-          <label [for]="'url-' + i">URL</label>
-          <input
-            [id]="'url-' + i"
-              type="url"
-              formControlName="url"
-              placeholder="https://..."
-          />
-        </div>
+          <div class="form-row">
+            <label [for]="'url-' + i">URL</label>
+            <input
+              [id]="'url-' + i"
+                type="url"
+                formControlName="url"
+                placeholder="https://..."
+            />
+          </div>
 
-        <div class="form-row">
-          <label [for]="'order-' + i">Order</label>
-          <input
-            [id]="'order-' + i"
-              type="number"
-              formControlName="displayOrder"
-              min="0"
-          />
-        </div>
+          <div class="form-row">
+            <label [for]="'order-' + i">Order</label>
+            <input
+              [id]="'order-' + i"
+                type="number"
+                formControlName="displayOrder"
+                min="0"
+            />
+          </div>
 
-        <button type="button" (click)="removeSocialLink(i)" class="remove-link-button">
-          Remove
-        </button>
-      </div>
+          <button type="button" (click)="removeSocialLink(i)" class="remove-link-button">
+            Remove
+          </button>
+        </div>
+      }
 
       <button type="button" (click)="addSocialLink()" class="add-link-button">
         + Add Social Link
@@ -143,9 +150,14 @@
 
     <div class="form-actions">
       <button type="submit" [disabled]="saving || aboutForm.invalid" class="save-button">
-        <span *ngIf="!saving">Save Changes</span>
-        <span *ngIf="saving">Saving...</span>
+        @if (!saving) {
+          <span>Save Changes</span>
+        }
+        @if (saving) {
+          <span>Saving...</span>
+        }
       </button>
     </div>
-  </form>
+    </form>
+  }
 </div>

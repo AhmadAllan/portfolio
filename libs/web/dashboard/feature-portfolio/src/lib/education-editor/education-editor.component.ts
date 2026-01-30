@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PortfolioService, IEducation } from '@portfolio/dashboard/data-access';
@@ -17,6 +17,8 @@ export class EducationEditorComponent implements OnInit {
   saving = false;
   error: string | null = null;
   editingId: string | null = null;
+
+  private destroyRef = inject(DestroyRef);
 
   constructor(
     private readonly portfolioService: PortfolioService,
@@ -44,16 +46,17 @@ export class EducationEditorComponent implements OnInit {
   loadEducation(): void {
     this.loading = true;
     this.error = null;
-    this.portfolioService.getEducations().subscribe({
+    const subscription = this.portfolioService.getEducations().subscribe({
       next: (data) => {
         this.education = data;
         this.loading = false;
       },
-      error: (err) => {
+      error: (_err) => {
         this.error = 'Failed to load education';
         this.loading = false;
       }
     });
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   editEducation(edu: IEducation): void {
@@ -96,16 +99,17 @@ export class EducationEditorComponent implements OnInit {
       displayOrder: this.educationForm.value.displayOrder!
     };
 
-    this.portfolioService.createEducation(data).subscribe({
+    const subscription = this.portfolioService.createEducation(data).subscribe({
       next: () => {
         this.saving = false;
         this.loadEducation();
       },
-      error: (err) => {
+      error: (_err) => {
         this.error = 'Failed to create education';
         this.saving = false;
       }
     });
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   updateEducation(): void {
@@ -131,28 +135,30 @@ export class EducationEditorComponent implements OnInit {
       displayOrder: this.educationForm.value.displayOrder!
     };
 
-    this.portfolioService.updateEducation(this.editingId!, data).subscribe({
+    const subscription = this.portfolioService.updateEducation(this.editingId!, data).subscribe({
       next: () => {
         this.saving = false;
         this.editingId = null;
         this.loadEducation();
       },
-      error: (err) => {
+      error: (_err) => {
         this.error = 'Failed to update education';
         this.saving = false;
       }
     });
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   deleteEducation(id: string): void {
-    this.portfolioService.deleteEducation(id).subscribe({
+    const subscription = this.portfolioService.deleteEducation(id).subscribe({
       next: () => {
         this.loadEducation();
       },
-      error: (err) => {
+      error: (_err) => {
         this.error = 'Failed to delete education';
       }
     });
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   cancelEdit(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PortfolioService, IAbout } from '@portfolio/dashboard/data-access';
@@ -16,6 +16,8 @@ export class AboutEditorComponent implements OnInit {
   loading = false;
   saving = false;
   error: string | null = null;
+
+  private destroyRef = inject(DestroyRef);
 
   constructor(
     private readonly portfolioService: PortfolioService,
@@ -41,7 +43,7 @@ export class AboutEditorComponent implements OnInit {
   loadAbout(): void {
     this.loading = true;
     this.error = null;
-    this.portfolioService.getAbout().subscribe({
+    const subscription = this.portfolioService.getAbout().subscribe({
       next: (data) => {
         this.about = data;
         this.aboutForm.patchValue({
@@ -57,11 +59,12 @@ export class AboutEditorComponent implements OnInit {
         });
         this.loading = false;
       },
-      error: (err) => {
+      error: (_err) => {
         this.error = 'Failed to load about information';
         this.loading = false;
       }
     });
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   saveAbout(): void {
@@ -85,15 +88,16 @@ export class AboutEditorComponent implements OnInit {
       socialLinks: this.aboutForm.value.socialLinks!
     };
 
-    this.portfolioService.updateAbout(this.about!.id, data).subscribe({
+    const subscription = this.portfolioService.updateAbout(this.about!.id, data).subscribe({
       next: () => {
         this.saving = false;
       },
-      error: (err) => {
+      error: (_err) => {
         this.error = 'Failed to save about information';
         this.saving = false;
       }
     });
+    this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
 
   get socialLinks() {

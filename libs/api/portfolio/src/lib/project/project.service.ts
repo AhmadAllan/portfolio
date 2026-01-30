@@ -39,24 +39,31 @@ export class ProjectService {
   }
 
   async createProject(dto: CreateProjectDto) {
-    const [result] = await db.insert(projects).values({
-      slug: dto.slug,
-      title: dto.title,
-      titleEn: dto.titleEn,
-      description: dto.description,
-      descriptionEn: dto.descriptionEn,
-      thumbnail: dto.thumbnail,
-      techStack: JSON.stringify(dto.techStack),
-      role: dto.role,
-      roleEn: dto.roleEn,
-      gallery: dto.gallery ? JSON.stringify(dto.gallery) : null,
-      liveUrl: dto.liveUrl,
-      githubUrl: dto.githubUrl,
-      status: 'active',
-      order: dto.displayOrder,
-    }).returning();
+    try {
+      const [result] = await db.insert(projects).values({
+        slug: dto.slug,
+        title: dto.title,
+        titleEn: dto.titleEn,
+        description: dto.description,
+        descriptionEn: dto.descriptionEn,
+        thumbnail: dto.thumbnail,
+        techStack: JSON.stringify(dto.techStack),
+        role: dto.role,
+        roleEn: dto.roleEn,
+        gallery: dto.gallery ? JSON.stringify(dto.gallery) : null,
+        liveUrl: dto.liveUrl,
+        githubUrl: dto.githubUrl,
+        status: 'active',
+        order: dto.displayOrder,
+      }).returning();
 
-    return result;
+      return result;
+    } catch (error) {
+      if (error instanceof TypeError) {
+        throw new Error('Invalid data format for JSON fields');
+      }
+      throw error;
+    }
   }
 
   async updateProject(id: string, dto: UpdateProjectDto) {
@@ -66,22 +73,58 @@ export class ProjectService {
       throw new NotFoundException('Project not found');
     }
 
-    const updateData: any = {};
+    const updateData: Partial<typeof projects.$inferInsert> = {};
 
-    if (dto.slug !== undefined) updateData.slug = dto.slug;
-    if (dto.title !== undefined) updateData.title = dto.title;
-    if (dto.titleEn !== undefined) updateData.titleEn = dto.titleEn;
-    if (dto.description !== undefined) updateData.description = dto.description;
-    if (dto.descriptionEn !== undefined) updateData.descriptionEn = dto.descriptionEn;
-    if (dto.thumbnail !== undefined) updateData.thumbnail = dto.thumbnail;
-    if (dto.techStack !== undefined) updateData.techStack = JSON.stringify(dto.techStack);
-    if (dto.role !== undefined) updateData.role = dto.role;
-    if (dto.roleEn !== undefined) updateData.roleEn = dto.roleEn;
-    if (dto.gallery !== undefined) updateData.gallery = dto.gallery ? JSON.stringify(dto.gallery) : null;
-    if (dto.liveUrl !== undefined) updateData.liveUrl = dto.liveUrl;
-    if (dto.githubUrl !== undefined) updateData.githubUrl = dto.githubUrl;
-    if (dto.status !== undefined) updateData.status = dto.status;
-    if (dto.displayOrder !== undefined) updateData.order = dto.displayOrder;
+    if (dto.slug !== undefined) {
+      updateData.slug = dto.slug;
+    }
+    if (dto.title !== undefined) {
+      updateData.title = dto.title;
+    }
+    if (dto.titleEn !== undefined) {
+      updateData.titleEn = dto.titleEn;
+    }
+    if (dto.description !== undefined) {
+      updateData.description = dto.description;
+    }
+    if (dto.descriptionEn !== undefined) {
+      updateData.descriptionEn = dto.descriptionEn;
+    }
+    if (dto.thumbnail !== undefined) {
+      updateData.thumbnail = dto.thumbnail;
+    }
+    if (dto.techStack !== undefined) {
+      try {
+        updateData.techStack = JSON.stringify(dto.techStack);
+      } catch (error) {
+        throw new Error('Invalid techStack format');
+      }
+    }
+    if (dto.role !== undefined) {
+      updateData.role = dto.role;
+    }
+    if (dto.roleEn !== undefined) {
+      updateData.roleEn = dto.roleEn;
+    }
+    if (dto.gallery !== undefined) {
+      try {
+        updateData.gallery = dto.gallery ? JSON.stringify(dto.gallery) : null;
+      } catch (error) {
+        throw new Error('Invalid gallery format');
+      }
+    }
+    if (dto.liveUrl !== undefined) {
+      updateData.liveUrl = dto.liveUrl;
+    }
+    if (dto.githubUrl !== undefined) {
+      updateData.githubUrl = dto.githubUrl;
+    }
+    if (dto.status !== undefined) {
+      updateData.status = dto.status;
+    }
+    if (dto.displayOrder !== undefined) {
+      updateData.order = dto.displayOrder;
+    }
 
     const [result] = await db
       .update(projects)

@@ -39,17 +39,35 @@ export class AboutService {
       throw new NotFoundException('About information not found');
     }
 
-    const updateData: any = {};
+    const updateData: Partial<typeof about.$inferInsert> = {};
 
-    if (dto.name !== undefined) updateData.name = dto.name;
-    if (dto.nameEn !== undefined) updateData.nameEn = dto.nameEn;
-    if (dto.title !== undefined) updateData.title = dto.title;
-    if (dto.titleEn !== undefined) updateData.titleEn = dto.titleEn;
-    if (dto.bio !== undefined) updateData.bio = dto.bio;
-    if (dto.bioEn !== undefined) updateData.bioEn = dto.bioEn;
-    if (dto.avatar !== undefined) updateData.avatar = dto.avatar;
-    if (dto.email !== undefined) updateData.email = dto.email;
-    if (dto.socialLinks !== undefined) updateData.socialLinks = JSON.stringify(dto.socialLinks);
+    if (dto.name !== undefined) {
+      updateData.name = dto.name;
+    }
+    if (dto.nameEn !== undefined) {
+      updateData.nameEn = dto.nameEn;
+    }
+    if (dto.title !== undefined) {
+      updateData.title = dto.title;
+    }
+    if (dto.titleEn !== undefined) {
+      updateData.titleEn = dto.titleEn;
+    }
+    if (dto.bio !== undefined) {
+      updateData.bio = dto.bio;
+    }
+    if (dto.bioEn !== undefined) {
+      updateData.bioEn = dto.bioEn;
+    }
+    if (dto.avatar !== undefined) {
+      updateData.avatar = dto.avatar;
+    }
+    if (dto.email !== undefined) {
+      updateData.email = dto.email;
+    }
+    if (dto.socialLinks !== undefined) {
+      updateData.socialLinks = JSON.stringify(dto.socialLinks);
+    }
 
     const [result] = await db
       .update(about)

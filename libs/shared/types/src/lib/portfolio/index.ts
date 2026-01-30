@@ -93,3 +93,6 @@ export interface IAbout {
   createdAt: Date;
   updatedAt: Date;
 }
+
+// Export DTOs
+export * from './dto';

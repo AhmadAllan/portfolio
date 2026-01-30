@@ -1,7 +1,7 @@
 export * from './user.interface';
 
 // JSend response types
-export interface IJSendSuccess<T = any> {
+export interface IJSendSuccess<T = unknown> {
   status: 'success';
   data: T;
 }
@@ -11,14 +11,14 @@ export interface IJSendFail {
   data: Record<string, string>;
 }
 
-export interface IJSendError {
+export interface IJSendError<T = Record<string, unknown>> {
   status: 'error';
   message: string;
   code?: string;
-  data?: any;
+  data?: T;
 }
 
-export type IJSendResponse<T = any> = IJSendSuccess<T> | IJSendFail | IJSendError;
+export type IJSendResponse<T = unknown> = IJSendSuccess<T> | IJSendFail | IJSendError;
 
 // Pagination
 export interface IPaginationMeta {

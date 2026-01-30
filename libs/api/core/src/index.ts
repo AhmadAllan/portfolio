@@ -19,6 +19,9 @@ export * from './lib/interceptors/jsend.interceptor';
 // Filters
 export * from './lib/filters/http-exception.filter';
 
+// Logging
+export * from './lib/logging/error-logger.service';
+
 // Pipes
 export * from './lib/pipes/validation.pipe';
 

@@ -33,3 +33,6 @@ export interface IMediaFile {
   // Relations
   folder?: IMediaFolder;
 }
+
+// Export DTOs
+export * from './dto';

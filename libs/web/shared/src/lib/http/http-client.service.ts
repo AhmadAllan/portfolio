@@ -1,15 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { IJSendResponse } from '@portfolio/shared-types';
+import { ENVIRONMENT, Environment } from '../config/environment.token';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiHttpClient {
-  private readonly apiUrl = 'http://localhost:3000/api/v1';
+  private readonly apiUrl: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(ENVIRONMENT) private env: Environment
+  ) {
+    this.apiUrl = this.env.apiUrl;
+  }
 
   get<T>(endpoint: string, options?: any): Observable<IJSendResponse<T>> {
     return this.http.get<IJSendResponse<T>>(`${this.apiUrl}${endpoint}`, options);
