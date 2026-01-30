@@ -233,27 +233,27 @@ Based on plan.md Nx monorepo structure:
 
 ### Implementation for User Story 1
 
-- [ ] T117 Generate portfolio feature libraries: `nx g @nx/angular:lib feature-shell --directory=libs/web/portfolio --standalone --routing`
-- [ ] T118 [P] Generate portfolio feature-about: `nx g @nx/angular:lib feature-about --directory=libs/web/portfolio --standalone`
-- [ ] T119 [P] Generate portfolio feature-projects: `nx g @nx/angular:lib feature-projects --directory=libs/web/portfolio --standalone`
-- [ ] T120 [P] Generate portfolio feature-experience: `nx g @nx/angular:lib feature-experience --directory=libs/web/portfolio --standalone`
-- [ ] T121 [P] Generate portfolio feature-skills: `nx g @nx/angular:lib feature-skills --directory=libs/web/portfolio --standalone`
-- [ ] T122 [P] Generate portfolio feature-education: `nx g @nx/angular:lib feature-education --directory=libs/web/portfolio --standalone`
-- [ ] T123 [P] Generate portfolio data-access: `nx g @nx/angular:lib data-access --directory=libs/web/portfolio --standalone`
-- [ ] T124 [P] Generate portfolio UI library: `nx g @nx/angular:lib ui --directory=libs/web/portfolio --standalone`
-- [ ] T125 [US1] Create portfolio data service in libs/web/portfolio/data-access/src/lib/portfolio-data.service.ts
-- [ ] T126 [P] [US1] Create hero section component in libs/web/portfolio/ui/src/lib/hero/hero.component.ts
-- [ ] T127 [P] [US1] Create about section component in libs/web/portfolio/feature-about/src/lib/about.component.ts
-- [ ] T128 [P] [US1] Create experience section component in libs/web/portfolio/feature-experience/src/lib/experience.component.ts
-- [ ] T129 [P] [US1] Create projects grid component in libs/web/portfolio/feature-projects/src/lib/projects-grid/projects-grid.component.ts
-- [ ] T130 [US1] Create project card component in libs/web/portfolio/ui/src/lib/project-card/project-card.component.ts
-- [ ] T131 [US1] Create project detail page in libs/web/portfolio/feature-projects/src/lib/project-detail/project-detail.component.ts
-- [ ] T132 [P] [US1] Create skills section with category grouping in libs/web/portfolio/feature-skills/src/lib/skills.component.ts
-- [ ] T133 [P] [US1] Create education section in libs/web/portfolio/feature-education/src/lib/education.component.ts
-- [ ] T134 [US1] Create contact section component in libs/web/portfolio/ui/src/lib/contact/contact.component.ts
-- [ ] T135 [US1] Create portfolio shell with all sections in libs/web/portfolio/feature-shell/src/lib/portfolio-shell.component.ts
-- [ ] T136 [US1] Configure portfolio routes in libs/web/portfolio/feature-shell/src/lib/portfolio.routes.ts
-- [ ] T137 [US1] Wire portfolio module into apps/web/src/app/app.routes.ts with SSR
+- [X] T117 Generate portfolio feature libraries: `nx g @nx/angular:lib feature-shell --directory=libs/web/portfolio --standalone --routing`
+- [X] T118 [P] Generate portfolio feature-about: `nx g @nx/angular:lib feature-about --directory=libs/web/portfolio --standalone`
+- [X] T119 [P] Generate portfolio feature-projects: `nx g @nx/angular:lib feature-projects --directory=libs/web/portfolio --standalone`
+- [X] T120 [P] Generate portfolio feature-experience: `nx g @nx/angular:lib feature-experience --directory=libs/web/portfolio --standalone`
+- [X] T121 [P] Generate portfolio feature-skills: `nx g @nx/angular:lib feature-skills --directory=libs/web/portfolio --standalone`
+- [X] T122 [P] Generate portfolio feature-education: `nx g @nx/angular:lib feature-education --directory=libs/web/portfolio --standalone`
+- [X] T123 [P] Generate portfolio data-access: `nx g @nx/angular:lib data-access --directory=libs/web/portfolio --standalone`
+- [X] T124 [P] Generate portfolio UI library: `nx g @nx/angular:lib ui --directory=libs/web/portfolio --standalone`
+- [X] T125 [US1] Create portfolio data service in libs/web/portfolio/data-access/src/lib/portfolio-data.service.ts
+- [X] T126 [P] [US1] Create hero section component in libs/web/portfolio/ui/src/lib/hero/hero.component.ts
+- [X] T127 [P] [US1] Create about section component in libs/web/portfolio/feature-about/src/lib/about.component.ts
+- [X] T128 [P] [US1] Create experience section component in libs/web/portfolio/feature-experience/src/lib/experience.component.ts
+- [X] T129 [P] [US1] Create projects grid component in libs/web/portfolio/feature-projects/src/lib/projects-grid/projects-grid.component.ts
+- [X] T130 [US1] Create project card component in libs/web/portfolio/ui/src/lib/project-card/project-card.component.ts
+- [X] T131 [US1] Create project detail page in libs/web/portfolio/feature-projects/src/lib/project-detail/project-detail.component.ts
+- [X] T132 [P] [US1] Create skills section with category grouping in libs/web/portfolio/feature-skills/src/lib/skills.component.ts
+- [X] T133 [P] [US1] Create education section in libs/web/portfolio/feature-education/src/lib/education.component.ts
+- [X] T134 [US1] Create contact section component in libs/web/portfolio/ui/src/lib/contact/contact.component.ts
+- [X] T135 [US1] Create portfolio shell with all sections in libs/web/portfolio/feature-shell/src/lib/portfolio-shell.component.ts
+- [X] T136 [US1] Configure portfolio routes in libs/web/portfolio/feature-shell/src/lib/portfolio.routes.ts
+- [X] T137 [US1] Wire portfolio module into apps/web/src/app/app.routes.ts with SSR
 
 **Checkpoint**: Public portfolio displays all 7 sections correctly - MVP deliverable!
 

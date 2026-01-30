@@ -21,7 +21,12 @@ export const appRoutes: Route[] = [
         loadComponent: () =>
           import('./pages/home/home.component').then((m) => m.HomeComponent),
       },
-      // Portfolio routes will be added here
+      // Portfolio routes
+      {
+        path: 'portfolio',
+        loadChildren: () =>
+          import('../../../../libs/web/portfolio/src/lib/lib.routes').then((m) => m.featureShellRoutes),
+      },
       // Blog routes will be added here
       // Garden routes will be added here
     ],
@@ -38,7 +43,12 @@ export const appRoutes: Route[] = [
         loadComponent: () =>
           import('./pages/home/home.component').then((m) => m.HomeComponent),
       },
-      // Portfolio routes will be added here
+      // Portfolio routes
+      {
+        path: 'portfolio',
+        loadChildren: () =>
+          import('../../../../libs/web/portfolio/src/lib/lib.routes').then((m) => m.featureShellRoutes),
+      },
       // Blog routes will be added here
       // Garden routes will be added here
     ],
