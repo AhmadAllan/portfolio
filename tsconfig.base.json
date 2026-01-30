@@ -23,7 +23,8 @@
       "@portfolio/media": ["libs/api/media/src/index.ts"],
       "@portfolio/web-shared": ["libs/web/shared/src/index.ts"],
       "@portfolio/feature-portfolio": ["libs/web/dashboard/src/index.ts"],
-      "@portfolio/feature-shell": ["libs/web/portfolio/src/index.ts"]
+      "@portfolio/feature-shell": ["libs/web/portfolio/src/index.ts"],
+      "@portfolio/feature": ["libs/web/landing/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

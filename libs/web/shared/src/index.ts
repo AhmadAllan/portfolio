@@ -23,3 +23,9 @@ export * from './lib/media';
 
 // Directives
 export * from './lib/directives/ltr-code.directive';
+
+export * from './lib/cthulhu-canvas';
+
+export * from './lib/rain-effect';
+
+export * from './lib/thunder-flash';
