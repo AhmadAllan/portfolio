@@ -219,7 +219,7 @@ Based on plan.md Nx monorepo structure:
 - [X] T113 [US8] Create Experience list/editor component in libs/web/dashboard/feature-portfolio/src/lib/experience-editor/experience-editor.component.ts
 - [X] T114 [US8] Create Skills editor component in libs/web/dashboard/feature-portfolio/src/lib/skills-editor/skills-editor.component.ts
 - [X] T115 [US8] Create Education editor component in libs/web/dashboard/feature-portfolio/src/lib/education-editor/education-editor.component.ts
-- [ ] T116 [US8] Create bilingual form component for side-by-side AR/EN editing in libs/web/dashboard/ui/src/lib/bilingual-form/bilingual-form.component.ts
+- [X] T116 [US8] Create bilingual form component for side-by-side AR/EN editing in libs/web/dashboard/ui/src/lib/bilingual-form/bilingual-form.component.ts
 
 **Checkpoint**: All portfolio sections can be managed via dashboard
 

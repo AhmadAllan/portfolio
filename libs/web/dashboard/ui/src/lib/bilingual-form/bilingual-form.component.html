@@ -1,0 +1,85 @@
+<div class="bilingual-form">
+  <div *ngFor="let field of fields; trackBy: trackByIndex" class="bilingual-form__field">
+    <label class="bilingual-form__label">{{ field.label }}</label>
+
+    <div class="bilingual-form__inputs">
+      <!-- Arabic Input -->
+      <div class="bilingual-form__input-wrapper bilingual-form__input-wrapper--ar" [attr.dir]="arDirection">
+        <label class="bilingual-form__lang-label" for="ar-{{ field.label | lowercase }}">
+          {{ arLabel }}
+          <span *ngIf="field.arRequired" class="bilingual-form__required">*</span>
+        </label>
+
+        <ng-container [ngSwitch]="isTextarea(field.type)">
+          <textarea
+            *ngSwitchCase="true"
+            [id]="'ar-' + field.label | lowercase"
+            [formControl]="field.arControl"
+            [placeholder]="field.arPlaceholder || ''"
+            class="bilingual-form__input bilingual-form__input--textarea"
+            rows="4"
+            (input)="onFieldChange($index, 'ar', $event.target.value)"
+          ></textarea>
+
+          <input
+            *ngSwitchDefault
+            [id]="'ar-' + field.label | lowercase"
+            [type]="getInputType(field.type)"
+            [formControl]="field.arControl"
+            [placeholder]="field.arPlaceholder || ''"
+            class="bilingual-form__input"
+            (input)="onFieldChange($index, 'ar', $event.target.value)"
+          />
+        </ng-container>
+
+        <div
+          *ngIf="field.arControl.invalid && field.arControl.touched"
+          class="bilingual-form__error"
+        >
+          <span *ngIf="field.arControl.errors?.['required']">This field is required</span>
+          <span *ngIf="field.arControl.errors?.['email']">Please enter a valid email</span>
+          <span *ngIf="field.arControl.errors?.['pattern']">Please enter a valid URL</span>
+        </div>
+      </div>
+
+      <!-- English Input -->
+      <div class="bilingual-form__input-wrapper bilingual-form__input-wrapper--en" [attr.dir]="enDirection">
+        <label class="bilingual-form__lang-label" for="en-{{ field.label | lowercase }}">
+          {{ enLabel }}
+          <span *ngIf="field.enRequired" class="bilingual-form__required">*</span>
+        </label>
+
+        <ng-container [ngSwitch]="isTextarea(field.type)">
+          <textarea
+            *ngSwitchCase="true"
+            [id]="'en-' + field.label | lowercase"
+            [formControl]="field.enControl"
+            [placeholder]="field.enPlaceholder || ''"
+            class="bilingual-form__input bilingual-form__input--textarea"
+            rows="4"
+            (input)="onFieldChange($index, 'en', $event.target.value)"
+          ></textarea>
+
+          <input
+            *ngSwitchDefault
+            [id]="'en-' + field.label | lowercase"
+            [type]="getInputType(field.type)"
+            [formControl]="field.enControl"
+            [placeholder]="field.enPlaceholder || ''"
+            class="bilingual-form__input"
+            (input)="onFieldChange($index, 'en', $event.target.value)"
+          />
+        </ng-container>
+
+        <div
+          *ngIf="field.enControl.invalid && field.enControl.touched"
+          class="bilingual-form__error"
+        >
+          <span *ngIf="field.enControl.errors?.['required']">This field is required</span>
+          <span *ngIf="field.enControl.errors?.['email']">Please enter a valid email</span>
+          <span *ngIf="field.enControl.errors?.['pattern']">Please enter a valid URL</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
