@@ -1,6 +1,7 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AuthService } from '@portfolio/web-shared';
 
 @Component({
@@ -127,7 +128,8 @@ export class DashboardShellComponent {
   constructor(private authService: AuthService) {}
 
   logout(): void {
-    const subscription = this.authService.logout().subscribe();
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+    this.authService.logout()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
   }
 }

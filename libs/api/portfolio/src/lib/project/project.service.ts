@@ -39,31 +39,24 @@ export class ProjectService {
   }
 
   async createProject(dto: CreateProjectDto) {
-    try {
-      const [result] = await db.insert(projects).values({
-        slug: dto.slug,
-        title: dto.title,
-        titleEn: dto.titleEn,
-        description: dto.description,
-        descriptionEn: dto.descriptionEn,
-        thumbnail: dto.thumbnail,
-        techStack: JSON.stringify(dto.techStack),
-        role: dto.role,
-        roleEn: dto.roleEn,
-        gallery: dto.gallery ? JSON.stringify(dto.gallery) : null,
-        liveUrl: dto.liveUrl,
-        githubUrl: dto.githubUrl,
-        status: 'active',
-        order: dto.displayOrder,
-      }).returning();
+    const [result] = await db.insert(projects).values({
+      slug: dto.slug,
+      title: dto.title,
+      titleEn: dto.titleEn,
+      description: dto.description,
+      descriptionEn: dto.descriptionEn,
+      thumbnail: dto.thumbnail,
+      techStack: JSON.stringify(dto.techStack),
+      role: dto.role,
+      roleEn: dto.roleEn,
+      gallery: dto.gallery ? JSON.stringify(dto.gallery) : null,
+      liveUrl: dto.liveUrl,
+      githubUrl: dto.githubUrl,
+      status: 'active',
+      order: dto.displayOrder,
+    }).returning();
 
-      return result;
-    } catch (error) {
-      if (error instanceof TypeError) {
-        throw new Error('Invalid data format for JSON fields');
-      }
-      throw error;
-    }
+    return result;
   }
 
   async updateProject(id: string, dto: UpdateProjectDto) {
@@ -94,11 +87,7 @@ export class ProjectService {
       updateData.thumbnail = dto.thumbnail;
     }
     if (dto.techStack !== undefined) {
-      try {
-        updateData.techStack = JSON.stringify(dto.techStack);
-      } catch (error) {
-        throw new Error('Invalid techStack format');
-      }
+      updateData.techStack = JSON.stringify(dto.techStack);
     }
     if (dto.role !== undefined) {
       updateData.role = dto.role;
@@ -107,11 +96,7 @@ export class ProjectService {
       updateData.roleEn = dto.roleEn;
     }
     if (dto.gallery !== undefined) {
-      try {
-        updateData.gallery = dto.gallery ? JSON.stringify(dto.gallery) : null;
-      } catch (error) {
-        throw new Error('Invalid gallery format');
-      }
+      updateData.gallery = dto.gallery ? JSON.stringify(dto.gallery) : null;
     }
     if (dto.liveUrl !== undefined) {
       updateData.liveUrl = dto.liveUrl;

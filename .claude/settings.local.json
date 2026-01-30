@@ -10,7 +10,8 @@
       "Bash(npm run build:*)",
       "Bash(npx nx:*)",
       "Bash(npm run lint:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(chmod:*)"
     ]
   }
 }

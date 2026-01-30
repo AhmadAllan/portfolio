@@ -18,7 +18,12 @@ import * as Joi from 'joi';
         FRONTEND_URL: Joi.string().uri().required(),
 
         // Database
-        DATABASE_URL: Joi.string().uri().required(),
+        DATABASE_URL: Joi.string()
+          .pattern(/^postgresql:\/\/.+/)
+          .required()
+          .messages({
+            'string.pattern.base': 'DATABASE_URL must be a valid PostgreSQL connection string (postgresql://...)',
+          }),
 
         // JWT Configuration
         JWT_SECRET: Joi.string().min(32).required(),

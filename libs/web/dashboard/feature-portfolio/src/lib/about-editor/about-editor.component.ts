@@ -1,6 +1,7 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PortfolioService, IAbout } from '@portfolio/dashboard/data-access';
 
 @Component({
@@ -43,28 +44,29 @@ export class AboutEditorComponent implements OnInit {
   loadAbout(): void {
     this.loading = true;
     this.error = null;
-    const subscription = this.portfolioService.getAbout().subscribe({
-      next: (data) => {
-        this.about = data;
-        this.aboutForm.patchValue({
-          name: data.name,
-          nameEn: data.nameEn || '',
-          title: data.title,
-          titleEn: data.titleEn || '',
-          bio: data.bio,
-          bioEn: data.bioEn || '',
-          avatar: data.avatar || '',
-          email: data.email,
-          socialLinks: data.socialLinks || []
-        });
-        this.loading = false;
-      },
-      error: (_err) => {
-        this.error = 'Failed to load about information';
-        this.loading = false;
-      }
-    });
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+    this.portfolioService.getAbout()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (data) => {
+          this.about = data;
+          this.aboutForm.patchValue({
+            name: data.name,
+            nameEn: data.nameEn || '',
+            title: data.title,
+            titleEn: data.titleEn || '',
+            bio: data.bio,
+            bioEn: data.bioEn || '',
+            avatar: data.avatar || '',
+            email: data.email,
+            socialLinks: data.socialLinks || []
+          });
+          this.loading = false;
+        },
+        error: (_err) => {
+          this.error = 'Failed to load about information';
+          this.loading = false;
+        }
+      });
   }
 
   saveAbout(): void {
@@ -88,16 +90,17 @@ export class AboutEditorComponent implements OnInit {
       socialLinks: this.aboutForm.value.socialLinks!
     };
 
-    const subscription = this.portfolioService.updateAbout(this.about!.id, data).subscribe({
-      next: () => {
-        this.saving = false;
-      },
-      error: (_err) => {
-        this.error = 'Failed to save about information';
-        this.saving = false;
-      }
-    });
-    this.destroyRef.onDestroy(() => subscription.unsubscribe());
+    this.portfolioService.updateAbout(this.about!.id, data)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: () => {
+          this.saving = false;
+        },
+        error: (_err) => {
+          this.error = 'Failed to save about information';
+          this.saving = false;
+        }
+      });
   }
 
   get socialLinks() {

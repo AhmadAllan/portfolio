@@ -1,5 +1,5 @@
 import { ErrorHandler, Injectable, Inject } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationService } from './notification.service';
 import { ENVIRONMENT, Environment } from '../config/environment.token';
 

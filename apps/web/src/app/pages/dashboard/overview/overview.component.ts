@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AuthService, AuthUser } from '@portfolio/web-shared';
@@ -72,7 +72,7 @@ import { AuthService, AuthUser } from '@portfolio/web-shared';
     }
   `],
 })
-export class OverviewComponent implements OnInit {
+export class OverviewComponent {
   user: AuthUser | null = null;
 
   constructor(private authService: AuthService) {
@@ -82,9 +82,5 @@ export class OverviewComponent implements OnInit {
       .subscribe((user) => {
         this.user = user;
       });
-  }
-
-  ngOnInit(): void {
-    // Lifecycle hook for other initialization if needed
   }
 }

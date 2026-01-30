@@ -153,8 +153,9 @@ export class LoginComponent {
     this.error = '';
     this.isLoading = true;
 
-    const subscription = this.authService
+    this.authService
       .login({ email: this.email, password: this.password })
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: () => {
           this.router.navigate(['/dashboard']);
@@ -164,10 +165,5 @@ export class LoginComponent {
           this.error = err.error?.data?.message || 'Invalid email or password';
         },
       });
-
-    // Cleanup subscription if component is destroyed before login completes
-    this.destroyRef.onDestroy(() => {
-      subscription.unsubscribe();
-    });
   }
 }

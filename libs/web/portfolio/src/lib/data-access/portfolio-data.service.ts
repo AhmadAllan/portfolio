@@ -22,9 +22,15 @@ export class PortfolioDataService {
     private http: HttpClient,
     @Inject(ENVIRONMENT) private env: Environment
   ) {
-    // Build portfolio API URL from base API URL
-    const baseUrl = this.env.apiUrl.replace(/\/api\/v\d+$/, '');
-    this.apiUrl = `${baseUrl}/api/portfolio`;
+    // Build portfolio API URL from base API URL using URL API for robust parsing
+    try {
+      const url = new URL(this.env.apiUrl);
+      this.apiUrl = `${url.origin}/api/portfolio`;
+    } catch {
+      // Fallback for relative URLs or SSR
+      const baseUrl = this.env.apiUrl.replace(/\/api\/v\d+$/, '');
+      this.apiUrl = `${baseUrl}/api/portfolio`;
+    }
   }
 
   // About

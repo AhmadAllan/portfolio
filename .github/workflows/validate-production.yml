@@ -1,0 +1,47 @@
+name: Validate Production Configuration
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  validate-env:
+    name: Validate Production Environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Validate production environment configuration
+        run: npm run validate:env
+
+      - name: Check for sensitive data in environment files
+        run: |
+          echo "Checking for potential secrets in environment files..."
+
+          # Check for common secret patterns (excluding .example files)
+          if grep -r -E "(password|secret|key|token)" apps/web/src/environments/environment.ts 2>/dev/null | grep -v "example" | grep -v "//"; then
+            echo "WARNING: Found potential secrets in production environment file"
+            echo "Ensure no actual secrets are committed to the repository"
+          fi
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "✅ Production environment validation passed"
+          echo "✅ No placeholder values detected"
+          echo "✅ Configuration is ready for deployment"

@@ -238,7 +238,7 @@ export class AuthService {
 
     return {
       httpOnly: true,
-      secure: true, // Always use secure cookies (HTTPS required)
+      secure: this.isProduction, // Require HTTPS in production only
       sameSite: this.isProduction ? 'strict' : 'lax',
       path: '/',
       maxAge: 15 * 60 * 1000, // 15 minutes
@@ -263,7 +263,7 @@ export class AuthService {
 
     return {
       httpOnly: true,
-      secure: true, // Always use secure cookies (HTTPS required)
+      secure: this.isProduction, // Require HTTPS in production only
       sameSite: this.isProduction ? 'strict' : 'lax',
       path: '/api/v1/auth',
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
@@ -283,7 +283,7 @@ export class AuthService {
 
     return {
       httpOnly: true,
-      secure: true, // Always use secure cookies
+      secure: this.isProduction, // Require HTTPS in production only
       sameSite: this.isProduction ? 'strict' : 'lax',
       path: '/',
       maxAge: 0,

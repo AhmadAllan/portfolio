@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { LayoutComponent, LanguageSwitcherComponent } from '@portfolio/web-shared';
@@ -31,8 +31,4 @@ import { LayoutComponent, LanguageSwitcherComponent } from '@portfolio/web-share
     }
   `],
 })
-export class HomeComponent implements OnInit {
-  ngOnInit(): void {
-    // Home page initialization
-  }
-}
+export class HomeComponent {}

@@ -1,11 +1,23 @@
 /**
  * Sanitize HTML by escaping special characters to prevent XSS attacks
+ * SSR-compatible with fallback for server-side rendering
  * @param html - The HTML string to sanitize
  * @returns Sanitized HTML string with special characters escaped
  */
 export function sanitizeHtml(html: string): string {
   if (!html) return '';
 
+  // Server-side fallback for SSR
+  if (typeof document === 'undefined') {
+    return html
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  // Browser-side sanitization
   const div = document.createElement('div');
   div.textContent = html;
   return div.innerHTML;
@@ -85,12 +97,34 @@ export function sanitizeEmail(email: string): string {
 
 /**
  * Strip all HTML tags from a string
+ * SSR-compatible with fallback for server-side rendering
+ *
+ * Note: This function is safe to use for extracting plain text from HTML.
+ * It does not render the HTML to the page, only uses the browser's parser
+ * to extract text content. Use sanitizeHtml() first if the input is untrusted.
+ *
  * @param html - The HTML string
  * @returns Plain text without HTML tags
  */
 export function stripHtmlTags(html: string): string {
   if (!html) return '';
 
+  // Server-side fallback for SSR
+  if (typeof document === 'undefined') {
+    // Simple regex-based tag removal for SSR
+    return html
+      .replace(/<[^>]*>/g, '') // Remove all HTML tags
+      .replace(/&nbsp;/g, ' ') // Replace &nbsp; with space
+      .replace(/&amp;/g, '&') // Unescape &
+      .replace(/&lt;/g, '<') // Unescape <
+      .replace(/&gt;/g, '>') // Unescape >
+      .replace(/&quot;/g, '"') // Unescape "
+      .replace(/&#039;/g, "'") // Unescape '
+      .trim();
+  }
+
+  // Browser-side tag stripping
+  // Safe: innerHTML is not rendered to page, only used to extract textContent
   const div = document.createElement('div');
   div.innerHTML = html;
   return div.textContent || div.innerText || '';

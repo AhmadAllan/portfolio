@@ -28,10 +28,6 @@ export class BilingualFormComponent {
   @Input() enDirection = 'ltr';
   @Output() fieldChange = new EventEmitter<{ index: number; lang: 'ar' | 'en'; value: string }>();
 
-  trackByIndex(index: number): number {
-    return index;
-  }
-
   onFieldChange(index: number, lang: 'ar' | 'en', value: string): void {
     this.fieldChange.emit({ index, lang, value });
   }

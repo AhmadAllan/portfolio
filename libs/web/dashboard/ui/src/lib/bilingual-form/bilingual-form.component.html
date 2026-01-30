@@ -1,5 +1,5 @@
 <div class="bilingual-form">
-  @for (field of fields; track trackByIndex($index, field); let idx = $index) {
+  @for (field of fields; track field.label; let idx = $index) {
     <div class="bilingual-form__field">
       <label class="bilingual-form__label">{{ field.label }}</label>
 
