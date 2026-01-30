@@ -21,6 +21,12 @@ export const appRoutes: Route[] = [
         loadComponent: () =>
           import('./pages/home/home.component').then((m) => m.HomeComponent),
       },
+      // Landing page
+      {
+        path: 'landing',
+        loadChildren: () =>
+          import('../../../../libs/web/landing/src/lib/feature/feature.routes').then((m) => m.featureRoutes),
+      },
       // Portfolio routes
       {
         path: 'portfolio',
@@ -42,6 +48,12 @@ export const appRoutes: Route[] = [
         pathMatch: 'full',
         loadComponent: () =>
           import('./pages/home/home.component').then((m) => m.HomeComponent),
+      },
+      // Landing page
+      {
+        path: 'landing',
+        loadChildren: () =>
+          import('../../../../libs/web/landing/src/lib/feature/feature.routes').then((m) => m.featureRoutes),
       },
       // Portfolio routes
       {

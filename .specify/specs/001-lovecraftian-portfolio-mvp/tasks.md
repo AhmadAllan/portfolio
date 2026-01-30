@@ -267,20 +267,20 @@ Based on plan.md Nx monorepo structure:
 
 ### Implementation for User Story 2
 
-- [ ] T138 Generate landing feature library: `nx g @nx/angular:lib feature --directory=libs/web/landing --standalone`
-- [ ] T139 Generate ui-effects library: `nx g @nx/angular:lib ui-effects --directory=libs/web/shared --standalone`
-- [ ] T140 [P] [US2] Create Cthulhu canvas animation in libs/web/shared/ui-effects/src/lib/cthulhu-canvas/cthulhu-canvas.component.ts
-- [ ] T141 [P] [US2] Create rain particle effect in libs/web/shared/ui-effects/src/lib/rain-effect/rain-effect.component.ts
-- [ ] T142 [P] [US2] Create thunder flash effect in libs/web/shared/ui-effects/src/lib/thunder-flash/thunder-flash.component.ts
-- [ ] T143 [US2] Implement prefers-reduced-motion detection in libs/web/shared/ui-effects/src/lib/motion-preference.service.ts
-- [ ] T144 [US2] Create responsive effect intensity service in libs/web/shared/ui-effects/src/lib/effect-intensity.service.ts
-- [ ] T145 [US2] Create portal card component in libs/web/landing/feature/src/lib/portal-card/portal-card.component.ts
-- [ ] T146 [US2] Create landing hero component with effects in libs/web/landing/feature/src/lib/landing-hero/landing-hero.component.ts
-- [ ] T147 [US2] Create bio/tagline section component in libs/web/landing/feature/src/lib/bio-section/bio-section.component.ts
-- [ ] T148 [US2] Create social links component in libs/web/shared/ui/src/lib/social-links/social-links.component.ts
-- [ ] T149 [US2] Create login button with navigation to dashboard in libs/web/landing/feature/src/lib/login-button/login-button.component.ts
-- [ ] T150 [US2] Create landing page shell in libs/web/landing/feature/src/lib/landing.component.ts
-- [ ] T151 [US2] Configure landing route as root in apps/web/src/app/app.routes.ts
+- [X] T138 Generate landing feature library: `nx g @nx/angular:lib feature --directory=libs/web/landing --standalone`
+- [X] T139 Generate ui-effects library: `nx g @nx/angular:lib ui-effects --directory=libs/web/shared --standalone`
+- [X] T140 [P] [US2] Create Cthulhu canvas animation in libs/web/shared/ui-effects/src/lib/cthulhu-canvas/cthulhu-canvas.component.ts
+- [X] T141 [P] [US2] Create rain particle effect in libs/web/shared/ui-effects/src/lib/rain-effect/rain-effect.component.ts
+- [X] T142 [P] [US2] Create thunder flash effect in libs/web/shared/ui-effects/src/lib/thunder-flash/thunder-flash.component.ts
+- [X] T143 [US2] Implement prefers-reduced-motion detection in libs/web/shared/ui-effects/src/lib/motion-preference.service.ts
+- [X] T144 [US2] Create responsive effect intensity service in libs/web/shared/ui-effects/src/lib/effect-intensity.service.ts
+- [X] T145 [US2] Create portal card component in libs/web/landing/feature/src/lib/portal-card/portal-card.component.ts
+- [X] T146 [US2] Create landing hero component with effects in libs/web/landing/feature/src/lib/landing-hero/landing-hero.component.ts
+- [X] T147 [US2] Create bio/tagline section component in libs/web/landing/feature/src/lib/bio-section/bio-section.component.ts
+- [X] T148 [US2] Create social links component in libs/web/shared/ui/src/lib/social-links/social-links.component.ts
+- [X] T149 [US2] Create login button with navigation to dashboard in libs/web/landing/feature/src/lib/login-button/login-button.component.ts
+- [X] T150 [US2] Create landing page shell in libs/web/landing/feature/src/lib/landing.component.ts
+- [X] T151 [US2] Configure landing route as root in apps/web/src/app/app.routes.ts
 
 **Checkpoint**: Landing page complete with all Lovecraftian effects
 
