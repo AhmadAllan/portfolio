@@ -212,13 +212,13 @@ Based on plan.md Nx monorepo structure:
 - [X] T106 [P] [US8] Create SkillController in libs/api/portfolio/src/lib/skill/skill.controller.ts
 - [X] T107 [P] [US8] Create EducationController in libs/api/portfolio/src/lib/education/education.controller.ts
 - [X] T108 [US8] Create PortfolioModule in libs/api/portfolio/src/lib/portfolio.module.ts
-- [ ] T109 Generate dashboard feature-portfolio library: `nx g @nx/angular:lib feature-portfolio --directory=libs/web/dashboard --standalone`
-- [ ] T110 [P] [US8] Create portfolio data-access service in libs/web/dashboard/data-access/src/lib/portfolio.service.ts
-- [ ] T111 [US8] Create About editor component in libs/web/dashboard/feature-portfolio/src/lib/about-editor/about-editor.component.ts
-- [ ] T112 [US8] Create Project list/editor component in libs/web/dashboard/feature-portfolio/src/lib/projects-editor/projects-editor.component.ts
-- [ ] T113 [US8] Create Experience list/editor component in libs/web/dashboard/feature-portfolio/src/lib/experience-editor/experience-editor.component.ts
-- [ ] T114 [US8] Create Skills editor component in libs/web/dashboard/feature-portfolio/src/lib/skills-editor/skills-editor.component.ts
-- [ ] T115 [US8] Create Education editor component in libs/web/dashboard/feature-portfolio/src/lib/education-editor/education-editor.component.ts
+- [X] T109 Generate dashboard feature-portfolio library: `nx g @nx/angular:lib feature-portfolio --directory=libs/web/dashboard --standalone`
+- [X] T110 [P] [US8] Create portfolio data-access service in libs/web/dashboard/data-access/src/lib/portfolio.service.ts
+- [X] T111 [US8] Create About editor component in libs/web/dashboard/feature-portfolio/src/lib/about-editor/about-editor.component.ts
+- [X] T112 [US8] Create Project list/editor component in libs/web/dashboard/feature-portfolio/src/lib/projects-editor/projects-editor.component.ts
+- [X] T113 [US8] Create Experience list/editor component in libs/web/dashboard/feature-portfolio/src/lib/experience-editor/experience-editor.component.ts
+- [X] T114 [US8] Create Skills editor component in libs/web/dashboard/feature-portfolio/src/lib/skills-editor/skills-editor.component.ts
+- [X] T115 [US8] Create Education editor component in libs/web/dashboard/feature-portfolio/src/lib/education-editor/education-editor.component.ts
 - [ ] T116 [US8] Create bilingual form component for side-by-side AR/EN editing in libs/web/dashboard/ui/src/lib/bilingual-form/bilingual-form.component.ts
 
 **Checkpoint**: All portfolio sections can be managed via dashboard

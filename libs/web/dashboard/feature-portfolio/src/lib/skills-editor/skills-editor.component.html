@@ -1,0 +1,105 @@
+<div class="skills-editor">
+  <div *ngIf="loading" class="loading">
+    <p>Loading skills...</p>
+  </div>
+
+  <div *ngIf="error" class="error">
+    <p class="error-message">{{ error }}</p>
+    <button (click)="loadSkills()" class="retry-button">Retry</button>
+  </div>
+
+  <div *ngIf="!loading" class="skills-list">
+    <div class="list-header">
+      <h2>Skills</h2>
+      <button (click)="createSkill()" class="create-button">+ New Skill</button>
+    </div>
+
+    <div *ngFor="let skill of skills" class="skill-card" (click)="editSkill(skill)">
+      <div class="skill-header">
+        <h3 class="skill-name">{{ skill.name }}</h3>
+        <span class="skill-category">{{ skill.category }}</span>
+      </div>
+      <div class="skill-meta">
+        <div class="skill-icon" *ngIf="skill.icon">
+          <span class="icon-{{ skill.icon }}"></span>
+        </div>
+        <span class="skill-order">Order: {{ skill.displayOrder }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="editingId" class="editor-overlay">
+    <div class="editor-modal">
+      <div class="modal-header">
+        <h3>{{ editingId ? 'Edit Skill' : 'Create Skill' }}</h3>
+        <button (click)="cancelEdit()" class="close-button">✕</button>
+      </div>
+
+      <form [formGroup]="skillsForm" (ngSubmit)="editingId ? updateSkill() : createSkill()" class="skill-form">
+        <div class="form-section">
+          <h3>Basic Information</h3>
+
+          <div class="form-row">
+            <label for="name-ar">Name (Arabic)*</label>
+            <input
+              id="name-ar"
+              type="text"
+              formControlName="name"
+              placeholder="Enter skill name in Arabic"
+            />
+          </div>
+
+          <div class="form-row">
+            <label for="name-en">Name (English)</label>
+            <input
+              id="name-en"
+              type="text"
+              formControlName="nameEn"
+              placeholder="Enter skill name in English"
+            />
+          </div>
+
+          <div class="form-row">
+            <label for="category">Category*</label>
+            <select id="category" formControlName="category">
+              <option value="languages">Languages</option>
+              <option value="frameworks">Frameworks</option>
+              <option value="tools">Tools</option>
+              <option value="databases">Databases</option>
+              <option value="cloud">Cloud</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <label for="icon">Icon</label>
+            <input
+              id="icon"
+              type="text"
+              formControlName="icon"
+              placeholder="e.g., devicon-angular, devicon-react"
+            />
+          </div>
+
+          <div class="form-row">
+            <label for="display-order">Display Order</label>
+            <input
+              id="display-order"
+              type="number"
+              formControlName="displayOrder"
+              min="0"
+            />
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" (click)="cancelEdit()" class="cancel-button">Cancel</button>
+          <button type="submit" [disabled]="saving || skillsForm.invalid" class="save-button">
+            <span *ngIf="!saving">{{ editingId ? 'Update' : 'Create' }} Skill</span>
+            <span *ngIf="saving">Saving...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
