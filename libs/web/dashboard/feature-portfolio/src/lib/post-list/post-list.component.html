@@ -1,0 +1,199 @@
+<div class="post-list">
+  <div class="post-list__header">
+    <h1 class="post-list__title">Blog Posts</h1>
+    <a routerLink="/dashboard/posts/new" class="post-list__btn post-list__btn--primary">
+      + New Post
+    </a>
+  </div>
+
+  <!-- Filters -->
+  <div class="post-list__filters">
+    <div class="post-list__filter-group">
+      <label class="post-list__label">Search</label>
+      <input
+        type="text"
+        class="post-list__input"
+        placeholder="Search posts..."
+        [value]="filter().search"
+        (input)="onSearchChange($any($event.target).value)"
+      />
+    </div>
+
+    <div class="post-list__filter-group">
+      <label class="post-list__label">Status</label>
+      <select class="post-list__select" (change)="filter.update(f => ({...f, status: $any($event.target).value})); onFilterChange()">
+        <option value="all">All Status</option>
+        <option value="draft">Draft</option>
+        <option value="published">Published</option>
+        <option value="archived">Archived</option>
+      </select>
+    </div>
+
+    <div class="post-list__filter-group">
+      <label class="post-list__label">Category</label>
+      <select class="post-list__select" (change)="filter.update(f => ({...f, categoryId: $any($event.target).value || null})); onFilterChange()">
+        <option value="">All Categories</option>
+        @for (category of categories(); track category.id) {
+          <option [value]="category.id">{{ category.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="post-list__filter-group">
+      <label class="post-list__label">Tag</label>
+      <select class="post-list__select" (change)="filter.update(f => ({...f, tagId: $any($event.target).value || null})); onFilterChange()">
+        <option value="">All Tags</option>
+        @for (tag of tags(); track tag.id) {
+          <option [value]="tag.id">{{ tag.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="post-list__filter-group">
+      <label class="post-list__label">Series</label>
+      <select class="post-list__select" (change)="filter.update(f => ({...f, seriesId: $any($event.target).value || null})); onFilterChange()">
+        <option value="">All Series</option>
+        @for (serie of series(); track serie.id) {
+          <option [value]="serie.id">{{ serie.title }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="post-list__filter-group">
+      <label class="post-list__label">Sort By</label>
+      <select class="post-list__select" (change)="onSortChange($any($event.target).value)">
+        <option value="updatedAt" [selected]="filter().sortBy === 'updatedAt'">Last Updated</option>
+        <option value="createdAt" [selected]="filter().sortBy === 'createdAt'">Created Date</option>
+        <option value="publishedAt" [selected]="filter().sortBy === 'publishedAt'">Published Date</option>
+        <option value="title" [selected]="filter().sortBy === 'title'">Title</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="post-list__loading">
+      <div class="post-list__spinner"></div>
+      <p class="post-list__loading-text">Loading posts...</p>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @if (!isLoading() && posts().length === 0) {
+    <div class="post-list__empty">
+      <p class="post-list__empty-text">No posts found. Create your first post to get started.</p>
+      <a routerLink="/dashboard/posts/new" class="post-list__btn post-list__btn--primary">
+        + New Post
+      </a>
+    </div>
+  }
+
+  <!-- Posts Table -->
+  @if (!isLoading() && posts().length > 0) {
+    <div class="post-list__table-container">
+      <table class="post-list__table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Category</th>
+            <th>Reading Time</th>
+            <th>Updated</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (post of posts(); track post.id) {
+            <tr class="post-list__row">
+              <td class="post-list__cell post-list__cell--title">
+                <div class="post-list__title-wrapper">
+                  <a [routerLink]="['/dashboard/posts', post.id]" class="post-list__post-title">
+                    {{ post.title }}
+                  </a>
+                  @if (post.titleEn) {
+                    <span class="post-list__subtitle">{{ post.titleEn }}</span>
+                  }
+                </div>
+              </td>
+              <td class="post-list__cell">
+                <span class="post-list__status" [ngClass]="getStatusClass(post.status)">
+                  {{ getStatusLabel(post.status) }}
+                </span>
+              </td>
+              <td class="post-list__cell">
+                @if (post.category) {
+                  <span class="post-list__tag">{{ post.category.name }}</span>
+                } @else {
+                  <span class="post-list__muted">-</span>
+                }
+              </td>
+              <td class="post-list__cell">
+                {{ getReadingTime(post.readingTime) }}
+              </td>
+              <td class="post-list__cell">
+                {{ formatDate(post.updatedAt) }}
+              </td>
+              <td class="post-list__cell post-list__cell--actions">
+                <div class="post-list__actions">
+                  <a
+                    [routerLink]="['/dashboard/posts', post.id]"
+                    class="post-list__action-btn post-list__action-btn--edit"
+                    title="Edit"
+                  >
+                    ✏️
+                  </a>
+                  <button
+                    (click)="deletePost(post.id)"
+                    class="post-list__action-btn post-list__action-btn--delete"
+                    title="Delete"
+                    [disabled]="isDeleting()"
+                  >
+                    🗑️
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    @if (totalPages() > 1) {
+      <div class="post-list__pagination">
+        <button
+          class="post-list__page-btn"
+          (click)="onPageChange(currentPage() - 1)"
+          [disabled]="currentPage() === 1"
+        >
+          Previous
+        </button>
+
+        @for (page of getPaginationPages(); track page) {
+          @if (page === currentPage()) {
+            <button class="post-list__page-btn post-list__page-btn--active">
+              {{ page }}
+            </button>
+          } @else {
+            <button class="post-list__page-btn" (click)="onPageChange(page)">
+              {{ page }}
+            </button>
+          }
+        }
+
+        <button
+          class="post-list__page-btn"
+          (click)="onPageChange(currentPage() + 1)"
+          [disabled]="currentPage() === totalPages()"
+        >
+          Next
+        </button>
+      </div>
+    }
+
+    <!-- Results Info -->
+    <div class="post-list__info">
+      <p>Showing {{ posts().length }} of {{ totalPosts() }} posts</p>
+    </div>
+  }
+</div>

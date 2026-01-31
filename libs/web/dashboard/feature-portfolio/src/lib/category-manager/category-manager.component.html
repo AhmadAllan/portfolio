@@ -1,0 +1,233 @@
+<div class="category-manager">
+  <div class="category-manager__header">
+    <h1 class="category-manager__title">Blog Categories</h1>
+  </div>
+
+  <!-- Form -->
+  <div class="category-manager__form-section">
+    <h2 class="category-manager__section-title">
+      {{ isEditing() ? 'Edit Category' : 'New Category' }}
+    </h2>
+
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="category-manager__form">
+      <!-- Language Toggle -->
+      <div class="category-manager__language-toggle">
+        <button
+          type="button"
+          class="category-manager__lang-btn"
+          [class.active]="isEnglish()"
+          (click)="toggleLanguage('en')"
+        >
+          🇬🇧 English
+        </button>
+        <button
+          type="button"
+          class="category-manager__lang-btn"
+          [class.active]="isArabic()"
+          (click)="toggleLanguage('ar')"
+        >
+          🇸🇦 العربية
+        </button>
+      </div>
+
+      <!-- Slug (only for new categories) -->
+      @if (!isEditing()) {
+        <div class="category-manager__field">
+          <label class="category-manager__label" for="slug">Slug *</label>
+          <input
+            id="slug"
+            type="text"
+            formControlName="slug"
+            class="category-manager__input"
+            placeholder="category-slug"
+            [class.category-manager__input--error]="categoryForm.get('slug')?.touched && categoryForm.get('slug')?.invalid"
+          />
+          @if (categoryForm.get('slug')?.touched && categoryForm.get('slug')?.hasError('required')) {
+            <span class="category-manager__error">Slug is required</span>
+          }
+          @if (categoryForm.get('slug')?.touched && categoryForm.get('slug')?.hasError('pattern')) {
+            <span class="category-manager__error">Slug must contain only lowercase letters, numbers, and hyphens</span>
+          }
+        </div>
+      }
+
+      <!-- Name (English) -->
+      <div class="category-manager__field">
+        <label class="category-manager__label" for="name">Name (English) *</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          class="category-manager__input"
+          placeholder="Category name"
+          [class.category-manager__input--error]="categoryForm.get('name')?.touched && categoryForm.get('name')?.invalid"
+        />
+        @if (categoryForm.get('name')?.touched && categoryForm.get('name')?.hasError('required')) {
+          <span class="category-manager__error">Name is required</span>
+        }
+      </div>
+
+      <!-- Name (Arabic) -->
+      <div class="category-manager__field">
+        <label class="category-manager__label" for="nameEn">Name (Arabic) *</label>
+        <input
+          id="nameEn"
+          type="text"
+          formControlName="nameEn"
+          class="category-manager__input"
+          placeholder="اسم الفئة"
+          dir="rtl"
+          [class.category-manager__input--error]="categoryForm.get('nameEn')?.touched && categoryForm.get('nameEn')?.invalid"
+        />
+        @if (categoryForm.get('nameEn')?.touched && categoryForm.get('nameEn')?.hasError('required')) {
+          <span class="category-manager__error">Arabic name is required</span>
+        }
+      </div>
+
+      <!-- Description (English) -->
+      <div class="category-manager__field">
+        <label class="category-manager__label" for="description">Description (English)</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          class="category-manager__textarea"
+          placeholder="Category description"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <!-- Description (Arabic) -->
+      <div class="category-manager__field">
+        <label class="category-manager__label" for="descriptionEn">Description (Arabic)</label>
+        <textarea
+          id="descriptionEn"
+          formControlName="descriptionEn"
+          class="category-manager__textarea"
+          placeholder="وصف الفئة"
+          dir="rtl"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <!-- Parent Category -->
+      <div class="category-manager__field">
+        <label class="category-manager__label" for="parentId">Parent Category</label>
+        <select
+          id="parentId"
+          formControlName="parentId"
+          class="category-manager__select"
+        >
+          <option value="">None (Root Category)</option>
+          @for (rootCategory of getRootCategories(); track rootCategory.id) {
+            <option [value]="rootCategory.id" [disabled]="categoryForm.value.id === rootCategory.id">
+              {{ rootCategory.name }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <!-- Actions -->
+      <div class="category-manager__actions">
+        <button
+          type="submit"
+          class="category-manager__btn category-manager__btn--primary"
+          [disabled]="isSaving() || categoryForm.invalid"
+        >
+          {{ isSaving() ? 'Saving...' : (isEditing() ? 'Update Category' : 'Create Category') }}
+        </button>
+        @if (isEditing()) {
+          <button
+            type="button"
+            class="category-manager__btn category-manager__btn--secondary"
+            (click)="cancelEdit()"
+            [disabled]="isSaving()"
+          >
+            Cancel
+          </button>
+        }
+      </div>
+    </form>
+  </div>
+
+  <!-- Categories List -->
+  <div class="category-manager__list-section">
+    <h2 class="category-manager__section-title">All Categories</h2>
+
+    <!-- Loading State -->
+    @if (isLoading()) {
+      <div class="category-manager__loading">
+        <div class="category-manager__spinner"></div>
+        <p class="category-manager__loading-text">Loading categories...</p>
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (!isLoading() && categories().length === 0) {
+      <div class="category-manager__empty">
+        <p class="category-manager__empty-text">No categories yet. Create your first category above.</p>
+      </div>
+    }
+
+    <!-- Categories Table -->
+    @if (!isLoading() && categories().length > 0) {
+      <div class="category-manager__table-container">
+        <table class="category-manager__table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Slug</th>
+              <th>Parent</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (category of categories(); track category.id) {
+              <tr class="category-manager__row">
+                <td class="category-manager__cell">
+                  <div class="category-manager__name-wrapper">
+                    <span class="category-manager__name">{{ category.name }}</span>
+                    @if (category.nameEn) {
+                      <span class="category-manager__name-ar">{{ category.nameEn }}</span>
+                    }
+                  </div>
+                </td>
+                <td class="category-manager__cell">
+                  <code class="category-manager__slug">{{ category.slug }}</code>
+                </td>
+                <td class="category-manager__cell">
+                  @if (category.parentId) {
+                    <span class="category-manager__parent">
+                      {{ getCategoryPath(category) }}
+                    </span>
+                  } @else {
+                    <span class="category-manager__muted">-</span>
+                  }
+                </td>
+                <td class="category-manager__cell category-manager__cell--actions">
+                  <div class="category-manager__actions">
+                    <button
+                      (click)="editCategory(category)"
+                      class="category-manager__action-btn category-manager__action-btn--edit"
+                      title="Edit"
+                      [disabled]="isDeleting()"
+                    >
+                      ✏️
+                    </button>
+                    <button
+                      (click)="deleteCategory(category.id)"
+                      class="category-manager__action-btn category-manager__action-btn--delete"
+                      title="Delete"
+                      [disabled]="isDeleting()"
+                    >
+                      🗑️
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</div>

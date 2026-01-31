@@ -288,38 +288,38 @@ Based on plan.md Nx monorepo structure:
 
 ## Phase 9: User Story 6 - Manage Blog Content (Priority: P1)
 
-**Goal**: Admin creates, edits, publishes blog posts with markdown editor
+**Goal**:  Admin creates, edits, publishes blog posts with markdown editor
 
 **Independent Test**: Create post via dashboard, preview, publish, verify on public blog
 
 ### Implementation for User Story 6
 
-- [ ] T152 [P] [US6] Create Post DTOs (create, update, list) in libs/api/blog/src/lib/post/dto/
-- [ ] T153 [P] [US6] Create Category DTOs in libs/api/blog/src/lib/category/dto/
-- [ ] T154 [P] [US6] Create Tag DTOs in libs/api/blog/src/lib/tag/dto/
-- [ ] T155 [P] [US6] Create Series DTOs in libs/api/blog/src/lib/series/dto/
-- [ ] T156 [US6] Implement PostService with CRUD, status transitions in libs/api/blog/src/lib/post/post.service.ts
-- [ ] T157 [US6] Implement reading time calculation in PostService
-- [ ] T158 [US6] Implement CategoryService in libs/api/blog/src/lib/category/category.service.ts
-- [ ] T159 [US6] Implement TagService in libs/api/blog/src/lib/tag/tag.service.ts
-- [ ] T160 [US6] Implement SeriesService in libs/api/blog/src/lib/series/series.service.ts
-- [ ] T161 [P] [US6] Create PostController with admin and public endpoints in libs/api/blog/src/lib/post/post.controller.ts
-- [ ] T162 [P] [US6] Create CategoryController in libs/api/blog/src/lib/category/category.controller.ts
-- [ ] T163 [P] [US6] Create TagController in libs/api/blog/src/lib/tag/tag.controller.ts
-- [ ] T164 [P] [US6] Create SeriesController in libs/api/blog/src/lib/series/series.controller.ts
-- [ ] T165 [US6] Create BlogModule in libs/api/blog/src/lib/blog.module.ts
-- [ ] T166 Generate dashboard feature-posts library: `nx g @nx/angular:lib feature-posts --directory=libs/web/dashboard --standalone`
-- [ ] T167 Generate util-markdown library: `nx g @nx/angular:lib util-markdown --directory=libs/web/shared --standalone`
-- [ ] T168 [US6] Implement markdown parser with Shiki syntax highlighting in libs/web/shared/util-markdown/src/lib/markdown.service.ts
-- [ ] T169 [P] [US6] Create blog data-access service in libs/web/dashboard/data-access/src/lib/blog.service.ts
-- [ ] T170 [US6] Create markdown editor component with toolbar in libs/web/dashboard/ui/src/lib/markdown-editor/markdown-editor.component.ts
-- [ ] T171 [US6] Create live preview pane component in libs/web/dashboard/ui/src/lib/live-preview/live-preview.component.ts
-- [ ] T172 [US6] Create SEO fields component in libs/web/dashboard/ui/src/lib/seo-fields/seo-fields.component.ts
-- [ ] T173 [US6] Create post editor page in libs/web/dashboard/feature-posts/src/lib/post-editor/post-editor.component.ts
-- [ ] T174 [US6] Create post list page in libs/web/dashboard/feature-posts/src/lib/post-list/post-list.component.ts
-- [ ] T175 [US6] Create category manager component in libs/web/dashboard/feature-posts/src/lib/category-manager/category-manager.component.ts
-- [ ] T176 [US6] Create tag manager component in libs/web/dashboard/feature-posts/src/lib/tag-manager/tag-manager.component.ts
-- [ ] T177 [US6] Create series manager component in libs/web/dashboard/feature-posts/src/lib/series-manager/series-manager.component.ts
+- [X] T152 [P] [US6] Create Post DTOs (create, update, list) in libs/api/blog/src/lib/post/dto/
+- [X] T153 [P] [US6] Create Category DTOs in libs/api/blog/src/lib/category/dto/
+- [X] T154 [P] [US6] Create Tag DTOs in libs/api/blog/src/lib/tag/dto/
+- [X] T155 [P] [US6] Create Series DTOs in libs/api/blog/src/lib/series/dto/
+- [X] T156 [US6] Implement PostService with CRUD, status transitions in libs/api/blog/src/lib/post/post.service.ts
+- [X] T157 [US6] Implement reading time calculation in PostService
+- [X] T158 [US6] Implement CategoryService in libs/api/blog/src/lib/category/category.service.ts
+- [X] T159 [US6] Implement TagService in libs/api/blog/src/lib/tag/tag.service.ts
+- [X] T160 [US6] Implement SeriesService in libs/api/blog/src/lib/series/series.service.ts
+- [X] T161 [P] [US6] Create PostController with admin and public endpoints in libs/api/blog/src/lib/post/post.controller.ts
+- [X] T162 [P] [US6] Create CategoryController in libs/api/blog/src/lib/category/category.controller.ts
+- [X] T163 [P] [US6] Create TagController in libs/api/blog/src/lib/tag/tag.controller.ts
+- [X] T164 [P] [US6] Create SeriesController in libs/api/blog/src/lib/series/series.controller.ts
+- [X] T165 [US6] Create BlogModule in libs/api/blog/src/lib/blog.module.ts
+- [X] T166 Generate dashboard feature-posts library: `nx g @nx/angular:lib feature-posts --directory=libs/web/dashboard --standalone`
+- [X] T167 Generate util-markdown library: `nx g @nx/angular:lib util-markdown --directory=libs/web/shared --standalone`
+- [X] T168 [US6] Implement markdown parser with Shiki syntax highlighting in libs/web/shared/util-markdown/src/lib/markdown.service.ts
+- [X] T169 [P] [US6] Create blog data-access service in libs/web/dashboard/data-access/src/lib/blog.service.ts
+- [X] T170 [US6] Create markdown editor component with toolbar in libs/web/dashboard/ui/src/lib/markdown-editor/markdown-editor.component.ts
+- [X] T171 [US6] Create live preview pane component in libs/web/dashboard/ui/src/lib/live-preview/live-preview.component.ts
+- [X] T172 [US6] Create SEO fields component in libs/web/dashboard/ui/src/lib/seo-fields/seo-fields.component.ts
+- [X] T173 [US6] Create post editor page in libs/web/dashboard/feature-portfolio/src/lib/post-editor/post-editor.component.ts
+- [X] T174 [US6] Create post list page in libs/web/dashboard/feature-portfolio/src/lib/post-list/post-list.component.ts
+- [X] T175 [US6] Create category manager component in libs/web/dashboard/feature-portfolio/src/lib/category-manager/category-manager.component.ts
+- [X] T176 [US6] Create tag manager component in libs/web/dashboard/feature-portfolio/src/lib/tag-manager/tag-manager.component.ts
+- [X] T177 [US6] Create series manager component in libs/web/dashboard/feature-portfolio/src/lib/series-manager/series-manager.component.ts
 
 **Checkpoint**: Blog content can be fully managed via dashboard
 

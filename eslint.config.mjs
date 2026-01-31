@@ -53,6 +53,15 @@ export default [
     },
   },
   {
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parserOptions: {
+        project: ['./tsconfig.base.json', './apps/*/tsconfig.json', './libs/**/tsconfig.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+  {
     files: [
       '**/*.ts',
       '**/*.tsx',
@@ -129,13 +138,6 @@ export default [
           allowSeparatedGroups: true,
         },
       ],
-    },
-  },
-  {
-    files: ['**/*.ts', '**/*.tsx'],
-    rules: {
-      // Angular-specific rules will be picked up from angular-eslint
-      '@angular-eslint/prefer-standalone': 'error',
     },
   },
 ];

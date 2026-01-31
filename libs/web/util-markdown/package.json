@@ -1,0 +1,17 @@
+{
+  "name": "@portfolio/util-markdown",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "main": "./src/index.js",
+  "typings": "./src/index.d.ts",
+  "dependencies": {
+    "marked": "^12.0.0",
+    "shiki": "^1.0.0",
+    "isomorphic-dompurify": "^2.0.0",
+    "tslib": "^2.3.0"
+  },
+  "peerDependencies": {
+    "@angular/common": "^19.0.0",
+    "@angular/core": "^19.0.0"
+  }
+}
