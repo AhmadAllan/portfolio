@@ -1,0 +1,1 @@
+{"mcpServers":{"nx-mcp":{"command":"npx","args":["nx-mcp@latest"],"alwaysAllow":["nx_workspace","nx_generators","nx_generator_schema"]},"angular-cli":{"command":"npx","args":["-y","@angular/cli","mcp"],"alwaysAllow":["list_projects"]},"context7":{"command":"npx","args":["-y","@upstash/context7-mcp"],"alwaysAllow":[],"disabled":true}}}

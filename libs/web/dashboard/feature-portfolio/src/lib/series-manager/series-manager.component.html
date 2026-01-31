@@ -1,0 +1,194 @@
+<div class="series-manager">
+  <div class="series-manager__header">
+    <h1 class="series-manager__title">Blog Series</h1>
+  </div>
+
+  <!-- Form -->
+  <div class="series-manager__form-section">
+    <h2 class="series-manager__section-title">
+      {{ isEditing() ? 'Edit Series' : 'New Series' }}
+    </h2>
+
+    <form [formGroup]="seriesForm" (ngSubmit)="onSubmit()" class="series-manager__form">
+      <!-- Language Toggle -->
+      <div class="series-manager__language-toggle">
+        <button
+          type="button"
+          class="series-manager__lang-btn"
+          [class.active]="isEnglish()"
+          (click)="toggleLanguage('en')"
+        >
+          🇬🇧 English
+        </button>
+        <button
+          type="button"
+          class="series-manager__lang-btn"
+          [class.active]="isArabic()"
+          (click)="toggleLanguage('ar')"
+        >
+          🇸🇦 العربية
+        </button>
+      </div>
+
+      <!-- Slug (only for new series) -->
+      @if (!isEditing()) {
+        <div class="series-manager__field">
+          <label class="series-manager__label" for="slug">Slug *</label>
+          <input
+            id="slug"
+            type="text"
+            formControlName="slug"
+            class="series-manager__input"
+            placeholder="series-slug"
+            [class.series-manager__input--error]="seriesForm.get('slug')?.touched && seriesForm.get('slug')?.invalid"
+          />
+          @if (seriesForm.get('slug')?.touched && seriesForm.get('slug')?.hasError('required')) {
+            <span class="series-manager__error">Slug is required</span>
+          }
+          @if (seriesForm.get('slug')?.touched && seriesForm.get('slug')?.hasError('pattern')) {
+            <span class="series-manager__error">Slug must contain only lowercase letters, numbers, and hyphens</span>
+          }
+        </div>
+      }
+
+      <!-- Title (English) -->
+      <div class="series-manager__field">
+        <label class="series-manager__label" for="title">Title (English) *</label>
+        <input
+          id="title"
+          type="text"
+          formControlName="title"
+          class="series-manager__input"
+          placeholder="Series title"
+          [class.series-manager__input--error]="seriesForm.get('title')?.touched && seriesForm.get('title')?.invalid"
+        />
+        @if (seriesForm.get('title')?.touched && seriesForm.get('title')?.hasError('required')) {
+          <span class="series-manager__error">Title is required</span>
+        }
+      </div>
+
+      <!-- Title (Arabic) -->
+      <div class="series-manager__field">
+        <label class="series-manager__label" for="titleEn">Title (Arabic) *</label>
+        <input
+          id="titleEn"
+          type="text"
+          formControlName="titleEn"
+          class="series-manager__input"
+          placeholder="عنوان السلسلة"
+          dir="rtl"
+          [class.series-manager__input--error]="seriesForm.get('titleEn')?.touched && seriesForm.get('titleEn')?.invalid"
+        />
+        @if (seriesForm.get('titleEn')?.touched && seriesForm.get('titleEn')?.hasError('required')) {
+          <span class="series-manager__error">Arabic title is required</span>
+        }
+      </div>
+
+      <!-- Description (English) -->
+      <div class="series-manager__field">
+        <label class="series-manager__label" for="description">Description (English)</label>
+        <textarea
+          id="description"
+          formControlName="description"
+          class="series-manager__textarea"
+          placeholder="Series description"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <!-- Description (Arabic) -->
+      <div class="series-manager__field">
+        <label class="series-manager__label" for="descriptionEn">Description (Arabic)</label>
+        <textarea
+          id="descriptionEn"
+          formControlName="descriptionEn"
+          class="series-manager__textarea"
+          placeholder="وصف السلسلة"
+          dir="rtl"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <!-- Actions -->
+      <div class="series-manager__actions">
+        <button
+          type="submit"
+          class="series-manager__btn series-manager__btn--primary"
+          [disabled]="isSaving() || seriesForm.invalid"
+        >
+          {{ isSaving() ? 'Saving...' : (isEditing() ? 'Update Series' : 'Create Series') }}
+        </button>
+        @if (isEditing()) {
+          <button
+            type="button"
+            class="series-manager__btn series-manager__btn--secondary"
+            (click)="cancelEdit()"
+            [disabled]="isSaving()"
+          >
+            Cancel
+          </button>
+        }
+      </div>
+    </form>
+  </div>
+
+  <!-- Series List -->
+  <div class="series-manager__list-section">
+    <h2 class="series-manager__section-title">All Series</h2>
+
+    <!-- Loading State -->
+    @if (isLoading()) {
+      <div class="series-manager__loading">
+        <div class="series-manager__spinner"></div>
+        <p class="series-manager__loading-text">Loading series...</p>
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (!isLoading() && series().length === 0) {
+      <div class="series-manager__empty">
+        <p class="series-manager__empty-text">No series yet. Create your first series above.</p>
+      </div>
+    }
+
+    <!-- Series Grid -->
+    @if (!isLoading() && series().length > 0) {
+      <div class="series-manager__grid">
+        @for (serie of series(); track serie.id) {
+          <div class="series-manager__card">
+            <div class="series-manager__card-content">
+              <div class="series-manager__title-wrapper">
+                <h3 class="series-manager__title">{{ serie.title }}</h3>
+                @if (serie.titleEn) {
+                  <span class="series-manager__title-ar">{{ serie.titleEn }}</span>
+                }
+              </div>
+              <code class="series-manager__slug">{{ serie.slug }}</code>
+            </div>
+            @if (serie.description) {
+              <p class="series-manager__description">{{ serie.description }}</p>
+            }
+          </div>
+          <div class="series-manager__card-actions">
+            <button
+              (click)="editSeries(serie)"
+              class="series-manager__action-btn series-manager__action-btn--edit"
+              title="Edit"
+              [disabled]="isDeleting()"
+            >
+              ✏️
+            </button>
+            <button
+              (click)="deleteSeries(serie.id)"
+              class="series-manager__action-btn series-manager__action-btn--delete"
+              title="Delete"
+              [disabled]="isDeleting()"
+            >
+              🗑️
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

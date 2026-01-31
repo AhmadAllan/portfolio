@@ -1,0 +1,123 @@
+<div class="markdown-editor">
+  <!-- Toolbar -->
+  <div class="markdown-editor__toolbar">
+    <div class="markdown-editor__toolbar-group">
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertHeading(1)" title="Heading 1">
+        <span class="markdown-editor__toolbar-icon">H1</span>
+      </button>
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertHeading(2)" title="Heading 2">
+        <span class="markdown-editor__toolbar-icon">H2</span>
+      </button>
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertHeading(3)" title="Heading 3">
+        <span class="markdown-editor__toolbar-icon">H3</span>
+      </button>
+    </div>
+
+    <div class="markdown-editor__toolbar-divider"></div>
+
+    <div class="markdown-editor__toolbar-group">
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertBold()" title="Bold (Ctrl+B)">
+        <span class="markdown-editor__toolbar-icon"><strong>B</strong></span>
+      </button>
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertItalic()" title="Italic (Ctrl+I)">
+        <span class="markdown-editor__toolbar-icon"><em>I</em></span>
+      </button>
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertStrikethrough()" title="Strikethrough">
+        <span class="markdown-editor__toolbar-icon"><s>S</s></span>
+      </button>
+    </div>
+
+    <div class="markdown-editor__toolbar-divider"></div>
+
+    <div class="markdown-editor__toolbar-group">
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertCode()" title="Inline Code">
+        <span class="markdown-editor__toolbar-icon"></></span>
+      </button>
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertCodeBlock()" title="Code Block">
+        <span class="markdown-editor__toolbar-icon">{ }</span>
+      </button>
+    </div>
+
+    <div class="markdown-editor__toolbar-divider"></div>
+
+    <div class="markdown-editor__toolbar-group">
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertLink()" title="Link">
+        <span class="markdown-editor__toolbar-icon">🔗</span>
+      </button>
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertImage()" title="Image">
+        <span class="markdown-editor__toolbar-icon">🖼️</span>
+      </button>
+    </div>
+
+    <div class="markdown-editor__toolbar-divider"></div>
+
+    <div class="markdown-editor__toolbar-group">
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertUnorderedList()" title="Unordered List">
+        <span class="markdown-editor__toolbar-icon">• List</span>
+      </button>
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertOrderedList()" title="Ordered List">
+        <span class="markdown-editor__toolbar-icon">1. List</span>
+      </button>
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertBlockquote()" title="Blockquote">
+        <span class="markdown-editor__toolbar-icon">"</span>
+      </button>
+    </div>
+
+    <div class="markdown-editor__toolbar-divider"></div>
+
+    <div class="markdown-editor__toolbar-group">
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertHorizontalRule()" title="Horizontal Rule">
+        <span class="markdown-editor__toolbar-icon">—</span>
+      </button>
+      <button type="button" class="markdown-editor__toolbar-btn" (click)="insertTable()" title="Table">
+        <span class="markdown-editor__toolbar-icon">⊞</span>
+      </button>
+    </div>
+
+    <div class="markdown-editor__toolbar-spacer"></div>
+
+    <div class="markdown-editor__toolbar-group">
+      <button
+        type="button"
+        class="markdown-editor__toolbar-btn markdown-editor__toolbar-btn--toggle"
+        [class.active]="isPreviewMode"
+        (click)="isPreviewMode = !isPreviewMode; updatePreview()"
+        title="Toggle Preview"
+      >
+        <span class="markdown-editor__toolbar-icon">{{ isPreviewMode ? '✏️' : '👁️' }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Editor / Preview -->
+  <div class="markdown-editor__content">
+    @if (!isPreviewMode) {
+      <textarea
+        [placeholder]="placeholder"
+        [readonly]="readonly"
+        [(ngModel)]="content"
+        (ngModelChange)="onContentChange($event)"
+        (blur)="onBlur()"
+        [style.min-height]="minHeight"
+        [style.max-height]="maxHeight"
+        class="markdown-editor__textarea"
+      ></textarea>
+    } @else {
+      <div class="markdown-editor__preview" [innerHTML]="previewHtml"></div>
+    }
+  </div>
+
+  <!-- Stats -->
+  @if (isPreviewMode) {
+    <div class="markdown-editor__stats">
+      <span class="markdown-editor__stat">
+        <span class="markdown-editor__stat-label">Words:</span>
+        <span class="markdown-editor__stat-value">{{ wordCount }}</span>
+      </span>
+      <span class="markdown-editor__stat">
+        <span class="markdown-editor__stat-label">Reading time:</span>
+        <span class="markdown-editor__stat-value">{{ readingTime }} min</span>
+      </span>
+    </div>
+  }
+</div>

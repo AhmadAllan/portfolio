@@ -1,0 +1,1277 @@
+openapi: 3.0.3
+info:
+  title: Lovecraftian Portfolio Platform API
+  description: RESTful API for the Lovecraftian Portfolio Platform following JSend specification
+  version: 1.0.0
+  contact:
+    name: API Support
+
+servers:
+  - url: /api/v1
+    description: API v1
+
+tags:
+  - name: Auth
+    description: Authentication endpoints
+  - name: Posts
+    description: Blog post operations
+  - name: Categories
+    description: Post category operations
+  - name: Tags
+    description: Post tag operations
+  - name: Series
+    description: Blog series operations
+  - name: Comments
+    description: Comment operations
+  - name: Notes
+    description: Digital garden note operations
+  - name: Portfolio
+    description: Portfolio content operations
+  - name: Media
+    description: Media library operations
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: access_token
+
+  schemas:
+    # Common Schemas
+    JSendSuccess:
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: string
+          enum: [success]
+        data:
+          type: object
+
+    JSendFail:
+      type: object
+      required:
+        - status
+        - data
+      properties:
+        status:
+          type: string
+          enum: [fail]
+        data:
+          type: object
+          additionalProperties:
+            type: string
+
+    JSendError:
+      type: object
+      required:
+        - status
+        - message
+      properties:
+        status:
+          type: string
+          enum: [error]
+        message:
+          type: string
+        code:
+          type: string
+        data:
+          type: object
+
+    PaginationMeta:
+      type: object
+      properties:
+        total:
+          type: integer
+        page:
+          type: integer
+        limit:
+          type: integer
+        totalPages:
+          type: integer
+
+    # Auth Schemas
+    LoginDto:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 12
+
+    AuthUser:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+
+    # Post Schemas
+    PostStatus:
+      type: string
+      enum: [draft, published, archived]
+
+    PostPreview:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        titleEn:
+          type: string
+        slug:
+          type: string
+        excerpt:
+          type: string
+        excerptEn:
+          type: string
+        featuredImage:
+          type: string
+        publishedAt:
+          type: string
+          format: date-time
+        readingTime:
+          type: integer
+
+    Post:
+      allOf:
+        - $ref: '#/components/schemas/PostPreview'
+        - type: object
+          properties:
+            content:
+              type: string
+            contentEn:
+              type: string
+            status:
+              $ref: '#/components/schemas/PostStatus'
+            categories:
+              type: array
+              items:
+                $ref: '#/components/schemas/Category'
+            tags:
+              type: array
+              items:
+                $ref: '#/components/schemas/Tag'
+            series:
+              $ref: '#/components/schemas/SeriesPreview'
+            seriesOrder:
+              type: integer
+            relatedPosts:
+              type: array
+              items:
+                $ref: '#/components/schemas/PostPreview'
+            seoTitle:
+              type: string
+            seoTitleEn:
+              type: string
+            seoDescription:
+              type: string
+            seoDescriptionEn:
+              type: string
+            ogImage:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+
+    CreatePostDto:
+      type: object
+      required:
+        - title
+        - slug
+        - content
+        - excerpt
+        - status
+      properties:
+        title:
+          type: string
+          maxLength: 255
+        titleEn:
+          type: string
+          maxLength: 255
+        slug:
+          type: string
+          maxLength: 100
+          pattern: '^[a-z0-9-]+$'
+        content:
+          type: string
+        contentEn:
+          type: string
+        excerpt:
+          type: string
+          maxLength: 500
+        excerptEn:
+          type: string
+          maxLength: 500
+        featuredImage:
+          type: string
+        status:
+          $ref: '#/components/schemas/PostStatus'
+        publishedAt:
+          type: string
+          format: date-time
+        categoryIds:
+          type: array
+          items:
+            type: string
+        tagIds:
+          type: array
+          items:
+            type: string
+        seriesId:
+          type: string
+        seriesOrder:
+          type: integer
+        relatedPostIds:
+          type: array
+          items:
+            type: string
+        seoTitle:
+          type: string
+          maxLength: 70
+        seoTitleEn:
+          type: string
+          maxLength: 70
+        seoDescription:
+          type: string
+          maxLength: 160
+        seoDescriptionEn:
+          type: string
+          maxLength: 160
+        ogImage:
+          type: string
+
+    # Category Schemas
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        nameEn:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+        descriptionEn:
+          type: string
+        parentId:
+          type: string
+        postCount:
+          type: integer
+
+    CreateCategoryDto:
+      type: object
+      required:
+        - name
+        - slug
+      properties:
+        name:
+          type: string
+          maxLength: 100
+        nameEn:
+          type: string
+          maxLength: 100
+        slug:
+          type: string
+          maxLength: 100
+        description:
+          type: string
+        descriptionEn:
+          type: string
+        parentId:
+          type: string
+        displayOrder:
+          type: integer
+
+    # Tag Schemas
+    Tag:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        nameEn:
+          type: string
+        slug:
+          type: string
+        postCount:
+          type: integer
+
+    CreateTagDto:
+      type: object
+      required:
+        - name
+        - slug
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        nameEn:
+          type: string
+          maxLength: 50
+        slug:
+          type: string
+          maxLength: 50
+
+    # Series Schemas
+    SeriesPreview:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        titleEn:
+          type: string
+        slug:
+          type: string
+        postCount:
+          type: integer
+
+    Series:
+      allOf:
+        - $ref: '#/components/schemas/SeriesPreview'
+        - type: object
+          properties:
+            description:
+              type: string
+            descriptionEn:
+              type: string
+            coverImage:
+              type: string
+            posts:
+              type: array
+              items:
+                $ref: '#/components/schemas/PostPreview'
+
+    # Comment Schemas
+    CommentStatus:
+      type: string
+      enum: [pending, approved, spam, deleted]
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+        postId:
+          type: string
+        parentId:
+          type: string
+        authorName:
+          type: string
+        authorWebsite:
+          type: string
+        content:
+          type: string
+        status:
+          $ref: '#/components/schemas/CommentStatus'
+        createdAt:
+          type: string
+          format: date-time
+        replies:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+
+    CreateCommentDto:
+      type: object
+      required:
+        - authorName
+        - authorEmail
+        - content
+      properties:
+        authorName:
+          type: string
+          minLength: 2
+          maxLength: 100
+        authorEmail:
+          type: string
+          format: email
+        authorWebsite:
+          type: string
+          format: uri
+        content:
+          type: string
+          maxLength: 5000
+        parentId:
+          type: string
+        honeypot:
+          type: string
+          description: Hidden field for spam detection
+
+    # Note Schemas
+    NoteMaturity:
+      type: string
+      enum: [seedling, budding, evergreen]
+
+    NotePreview:
+      type: object
+      properties:
+        slug:
+          type: string
+        title:
+          type: string
+        titleEn:
+          type: string
+        maturity:
+          $ref: '#/components/schemas/NoteMaturity'
+
+    Note:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        titleEn:
+          type: string
+        slug:
+          type: string
+        content:
+          type: string
+        contentEn:
+          type: string
+        maturity:
+          $ref: '#/components/schemas/NoteMaturity'
+        tags:
+          type: array
+          items:
+            type: string
+        backlinks:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotePreview'
+        forwardLinks:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotePreview'
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    CreateNoteDto:
+      type: object
+      required:
+        - title
+        - slug
+        - content
+        - maturity
+      properties:
+        title:
+          type: string
+          maxLength: 255
+        titleEn:
+          type: string
+          maxLength: 255
+        slug:
+          type: string
+          maxLength: 255
+        content:
+          type: string
+        contentEn:
+          type: string
+        maturity:
+          $ref: '#/components/schemas/NoteMaturity'
+        tags:
+          type: array
+          items:
+            type: string
+
+    BrokenLink:
+      type: object
+      properties:
+        sourceNoteId:
+          type: string
+        sourceNoteTitle:
+          type: string
+        targetSlug:
+          type: string
+        displayText:
+          type: string
+
+    # Portfolio Schemas
+    About:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        nameEn:
+          type: string
+        title:
+          type: string
+        titleEn:
+          type: string
+        tagline:
+          type: string
+        taglineEn:
+          type: string
+        bio:
+          type: string
+        bioEn:
+          type: string
+        avatar:
+          type: string
+        email:
+          type: string
+        socialLinks:
+          type: array
+          items:
+            $ref: '#/components/schemas/SocialLink'
+
+    SocialLink:
+      type: object
+      properties:
+        platform:
+          type: string
+          enum: [github, linkedin, twitter, youtube, devto, medium, website]
+        url:
+          type: string
+        displayOrder:
+          type: integer
+
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        titleEn:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+        descriptionEn:
+          type: string
+        thumbnail:
+          type: string
+        gallery:
+          type: array
+          items:
+            type: string
+        techStack:
+          type: array
+          items:
+            type: string
+        role:
+          type: string
+        roleEn:
+          type: string
+        duration:
+          type: string
+        durationEn:
+          type: string
+        teamSize:
+          type: integer
+        challenges:
+          type: string
+        challengesEn:
+          type: string
+        liveUrl:
+          type: string
+        githubUrl:
+          type: string
+        displayOrder:
+          type: integer
+        featured:
+          type: boolean
+
+    Experience:
+      type: object
+      properties:
+        id:
+          type: string
+        company:
+          type: string
+        companyEn:
+          type: string
+        logo:
+          type: string
+        title:
+          type: string
+        titleEn:
+          type: string
+        location:
+          type: string
+        locationEn:
+          type: string
+        employmentType:
+          type: string
+          enum: [full-time, part-time, contract, freelance, internship]
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        current:
+          type: boolean
+        description:
+          type: string
+        descriptionEn:
+          type: string
+        displayOrder:
+          type: integer
+
+    Skill:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        nameEn:
+          type: string
+        category:
+          type: string
+          enum: [languages, frameworks, tools, databases, cloud, other]
+        icon:
+          type: string
+        displayOrder:
+          type: integer
+
+    Education:
+      type: object
+      properties:
+        id:
+          type: string
+        institution:
+          type: string
+        institutionEn:
+          type: string
+        degree:
+          type: string
+        degreeEn:
+          type: string
+        field:
+          type: string
+        fieldEn:
+          type: string
+        year:
+          type: integer
+        type:
+          type: string
+          enum: [degree, certification, course]
+        displayOrder:
+          type: integer
+
+    # Media Schemas
+    MediaFile:
+      type: object
+      properties:
+        id:
+          type: string
+        filename:
+          type: string
+        originalFilename:
+          type: string
+        mimeType:
+          type: string
+        size:
+          type: integer
+        width:
+          type: integer
+        height:
+          type: integer
+        url:
+          type: string
+        thumbnailUrl:
+          type: string
+        altText:
+          type: string
+        altTextEn:
+          type: string
+        caption:
+          type: string
+        captionEn:
+          type: string
+        folderId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    MediaFolder:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        parentId:
+          type: string
+        fileCount:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+
+    UpdateMediaMetadataDto:
+      type: object
+      properties:
+        altText:
+          type: string
+          maxLength: 255
+        altTextEn:
+          type: string
+          maxLength: 255
+        caption:
+          type: string
+          maxLength: 500
+        captionEn:
+          type: string
+          maxLength: 500
+        folderId:
+          type: string
+
+paths:
+  # Auth Endpoints
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginDto'
+      responses:
+        '200':
+          description: Login successful
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/JSendSuccess'
+                  - properties:
+                      data:
+                        properties:
+                          user:
+                            $ref: '#/components/schemas/AuthUser'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JSendFail'
+
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      summary: Refresh access token
+      responses:
+        '200':
+          description: Token refreshed
+        '401':
+          description: Invalid refresh token
+
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: Logout
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: Logged out successfully
+
+  # Public Post Endpoints
+  /posts:
+    get:
+      tags: [Posts]
+      summary: List published posts
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: tag
+          in: query
+          schema:
+            type: string
+        - name: q
+          in: query
+          schema:
+            type: string
+          description: Search query
+      responses:
+        '200':
+          description: List of posts
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/JSendSuccess'
+                  - properties:
+                      data:
+                        properties:
+                          posts:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/PostPreview'
+                          meta:
+                            $ref: '#/components/schemas/PaginationMeta'
+
+  /posts/{slug}:
+    get:
+      tags: [Posts]
+      summary: Get post by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Post details
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/JSendSuccess'
+                  - properties:
+                      data:
+                        properties:
+                          post:
+                            $ref: '#/components/schemas/Post'
+        '404':
+          description: Post not found
+
+  /posts/{slug}/comments:
+    get:
+      tags: [Comments]
+      summary: Get comments for post
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of approved comments
+
+    post:
+      tags: [Comments]
+      summary: Create comment
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommentDto'
+      responses:
+        '201':
+          description: Comment created (pending or approved)
+        '429':
+          description: Rate limit exceeded
+
+  # Public Note Endpoints
+  /notes:
+    get:
+      tags: [Notes]
+      summary: List all notes
+      parameters:
+        - name: tag
+          in: query
+          schema:
+            type: string
+        - name: maturity
+          in: query
+          schema:
+            $ref: '#/components/schemas/NoteMaturity'
+        - name: q
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of notes
+
+  /notes/{slug}:
+    get:
+      tags: [Notes]
+      summary: Get note by slug with backlinks
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Note details with backlinks
+        '404':
+          description: Note not found
+
+  # Public Portfolio Endpoints
+  /about:
+    get:
+      tags: [Portfolio]
+      summary: Get about info
+      responses:
+        '200':
+          description: About information
+
+  /experience:
+    get:
+      tags: [Portfolio]
+      summary: List experiences
+      responses:
+        '200':
+          description: List of experiences
+
+  /projects:
+    get:
+      tags: [Portfolio]
+      summary: List projects
+      responses:
+        '200':
+          description: List of projects
+
+  /projects/{slug}:
+    get:
+      tags: [Portfolio]
+      summary: Get project by slug
+      parameters:
+        - name: slug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Project details
+
+  /skills:
+    get:
+      tags: [Portfolio]
+      summary: List skills by category
+      responses:
+        '200':
+          description: Skills grouped by category
+
+  /education:
+    get:
+      tags: [Portfolio]
+      summary: List education and certifications
+      responses:
+        '200':
+          description: List of education entries
+
+  # Admin Endpoints (all require cookieAuth)
+  /admin/posts:
+    get:
+      tags: [Posts]
+      summary: List all posts (any status)
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: List of all posts
+
+    post:
+      tags: [Posts]
+      summary: Create post
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostDto'
+      responses:
+        '201':
+          description: Post created
+
+  /admin/posts/{id}:
+    get:
+      tags: [Posts]
+      summary: Get post by ID
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Post details
+
+    put:
+      tags: [Posts]
+      summary: Update post
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Post updated
+
+    delete:
+      tags: [Posts]
+      summary: Delete post
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Post deleted
+
+  /admin/notes:
+    get:
+      tags: [Notes]
+      summary: List all notes
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: List of notes
+
+    post:
+      tags: [Notes]
+      summary: Create note
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateNoteDto'
+      responses:
+        '201':
+          description: Note created
+
+  /admin/notes/broken-links:
+    get:
+      tags: [Notes]
+      summary: List broken wiki-links
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: List of broken links
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/JSendSuccess'
+                  - properties:
+                      data:
+                        properties:
+                          brokenLinks:
+                            type: array
+                            items:
+                              $ref: '#/components/schemas/BrokenLink'
+
+  /admin/comments:
+    get:
+      tags: [Comments]
+      summary: List pending comments
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: List of pending comments
+
+  /admin/comments/{id}/approve:
+    patch:
+      tags: [Comments]
+      summary: Approve comment
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Comment approved
+
+  /admin/comments/{id}/spam:
+    patch:
+      tags: [Comments]
+      summary: Mark comment as spam
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Comment marked as spam
+
+  /admin/media:
+    get:
+      tags: [Media]
+      summary: List media files
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: folderId
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of media files
+
+  /admin/media/upload:
+    post:
+      tags: [Media]
+      summary: Upload file
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                folderId:
+                  type: string
+      responses:
+        '201':
+          description: File uploaded
+        '413':
+          description: File too large (max 10MB)
+
+  /admin/media/{id}:
+    put:
+      tags: [Media]
+      summary: Update media metadata
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMediaMetadataDto'
+      responses:
+        '200':
+          description: Metadata updated
+
+    delete:
+      tags: [Media]
+      summary: Delete media file
+      security:
+        - cookieAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File deleted
+
+  /admin/media/folders:
+    get:
+      tags: [Media]
+      summary: List folders
+      security:
+        - cookieAuth: []
+      responses:
+        '200':
+          description: List of folders
+
+    post:
+      tags: [Media]
+      summary: Create folder
+      security:
+        - cookieAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                parentId:
+                  type: string
+      responses:
+        '201':
+          description: Folder created

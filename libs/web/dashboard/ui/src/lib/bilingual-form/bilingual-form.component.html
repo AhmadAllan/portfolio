@@ -1,0 +1,103 @@
+<div class="bilingual-form">
+  @for (field of fields; track field.label; let idx = $index) {
+    <div class="bilingual-form__field">
+      <label class="bilingual-form__label">{{ field.label }}</label>
+
+      <div class="bilingual-form__inputs">
+        <!-- Arabic Input -->
+        <div class="bilingual-form__input-wrapper bilingual-form__input-wrapper--ar" [attr.dir]="arDirection">
+          <label class="bilingual-form__lang-label" [for]="'ar-' + (field.label | lowercase)">
+            {{ arLabel }}
+            @if (field.arRequired) {
+              <span class="bilingual-form__required">*</span>
+            }
+          </label>
+
+          @switch (isTextarea(field.type)) {
+            @case (true) {
+              <textarea
+                [id]="'ar-' + (field.label | lowercase)"
+                [formControl]="field.arControl"
+                [placeholder]="field.arPlaceholder || ''"
+                class="bilingual-form__input bilingual-form__input--textarea"
+                rows="4"
+                (input)="onFieldChange(idx, 'ar', $any($event.target).value)"
+              ></textarea>
+            }
+            @default {
+              <input
+                [id]="'ar-' + (field.label | lowercase)"
+                [type]="getInputType(field.type)"
+                [formControl]="field.arControl"
+                [placeholder]="field.arPlaceholder || ''"
+                class="bilingual-form__input"
+                (input)="onFieldChange(idx, 'ar', $any($event.target).value)"
+              />
+            }
+          }
+
+          @if (field.arControl.invalid && field.arControl.touched) {
+            <div class="bilingual-form__error">
+              @if (field.arControl.errors?.['required']) {
+                <span>This field is required</span>
+              }
+              @if (field.arControl.errors?.['email']) {
+                <span>Please enter a valid email</span>
+              }
+              @if (field.arControl.errors?.['pattern']) {
+                <span>Please enter a valid URL</span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- English Input -->
+        <div class="bilingual-form__input-wrapper bilingual-form__input-wrapper--en" [attr.dir]="enDirection">
+          <label class="bilingual-form__lang-label" [for]="'en-' + (field.label | lowercase)">
+            {{ enLabel }}
+            @if (field.enRequired) {
+              <span class="bilingual-form__required">*</span>
+            }
+          </label>
+
+          @switch (isTextarea(field.type)) {
+            @case (true) {
+              <textarea
+                [id]="'en-' + (field.label | lowercase)"
+                [formControl]="field.enControl"
+                [placeholder]="field.enPlaceholder || ''"
+                class="bilingual-form__input bilingual-form__input--textarea"
+                rows="4"
+                (input)="onFieldChange(idx, 'en', $any($event.target).value)"
+              ></textarea>
+            }
+            @default {
+              <input
+                [id]="'en-' + (field.label | lowercase)"
+                [type]="getInputType(field.type)"
+                [formControl]="field.enControl"
+                [placeholder]="field.enPlaceholder || ''"
+                class="bilingual-form__input"
+                (input)="onFieldChange(idx, 'en', $any($event.target).value)"
+              />
+            }
+          }
+
+          @if (field.enControl.invalid && field.enControl.touched) {
+            <div class="bilingual-form__error">
+              @if (field.enControl.errors?.['required']) {
+                <span>This field is required</span>
+              }
+              @if (field.enControl.errors?.['email']) {
+                <span>Please enter a valid email</span>
+              }
+              @if (field.enControl.errors?.['pattern']) {
+                <span>Please enter a valid URL</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

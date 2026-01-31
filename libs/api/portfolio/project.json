@@ -1,0 +1,20 @@
+{
+  "name": "portfolio",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/portfolio/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/api/portfolio",
+        "tsConfig": "libs/api/portfolio/tsconfig.lib.json",
+        "packageJson": "libs/api/portfolio/package.json",
+        "main": "libs/api/portfolio/src/index.ts",
+        "assets": ["libs/api/portfolio/*.md"]
+      }
+    }
+  }
+}

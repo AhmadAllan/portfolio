@@ -1,0 +1,166 @@
+<div class="tag-manager">
+  <div class="tag-manager__header">
+    <h1 class="tag-manager__title">Blog Tags</h1>
+  </div>
+
+  <!-- Form -->
+  <div class="tag-manager__form-section">
+    <h2 class="tag-manager__section-title">
+      {{ isEditing() ? 'Edit Tag' : 'New Tag' }}
+    </h2>
+
+    <form [formGroup]="tagForm" (ngSubmit)="onSubmit()" class="tag-manager__form">
+      <!-- Language Toggle -->
+      <div class="tag-manager__language-toggle">
+        <button
+          type="button"
+          class="tag-manager__lang-btn"
+          [class.active]="isEnglish()"
+          (click)="toggleLanguage('en')"
+        >
+          🇬🇧 English
+        </button>
+        <button
+          type="button"
+          class="tag-manager__lang-btn"
+          [class.active]="isArabic()"
+          (click)="toggleLanguage('ar')"
+        >
+          🇸🇦 العربية
+        </button>
+      </div>
+
+      <!-- Slug (only for new tags) -->
+      @if (!isEditing()) {
+        <div class="tag-manager__field">
+          <label class="tag-manager__label" for="slug">Slug *</label>
+          <input
+            id="slug"
+            type="text"
+            formControlName="slug"
+            class="tag-manager__input"
+            placeholder="tag-slug"
+            [class.tag-manager__input--error]="tagForm.get('slug')?.touched && tagForm.get('slug')?.invalid"
+          />
+          @if (tagForm.get('slug')?.touched && tagForm.get('slug')?.hasError('required')) {
+            <span class="tag-manager__error">Slug is required</span>
+          }
+          @if (tagForm.get('slug')?.touched && tagForm.get('slug')?.hasError('pattern')) {
+            <span class="tag-manager__error">Slug must contain only lowercase letters, numbers, and hyphens</span>
+          }
+        </div>
+      }
+
+      <!-- Name (English) -->
+      <div class="tag-manager__field">
+        <label class="tag-manager__label" for="name">Name (English) *</label>
+        <input
+          id="name"
+          type="text"
+          formControlName="name"
+          class="tag-manager__input"
+          placeholder="Tag name"
+          [class.tag-manager__input--error]="tagForm.get('name')?.touched && tagForm.get('name')?.invalid"
+        />
+        @if (tagForm.get('name')?.touched && tagForm.get('name')?.hasError('required')) {
+          <span class="tag-manager__error">Name is required</span>
+        }
+      </div>
+
+      <!-- Name (Arabic) -->
+      <div class="tag-manager__field">
+        <label class="tag-manager__label" for="nameEn">Name (Arabic) *</label>
+        <input
+          id="nameEn"
+          type="text"
+          formControlName="nameEn"
+          class="tag-manager__input"
+          placeholder="اسم الوسم"
+          dir="rtl"
+          [class.tag-manager__input--error]="tagForm.get('nameEn')?.touched && tagForm.get('nameEn')?.invalid"
+        />
+        @if (tagForm.get('nameEn')?.touched && tagForm.get('nameEn')?.hasError('required')) {
+          <span class="tag-manager__error">Arabic name is required</span>
+        }
+      </div>
+
+      <!-- Actions -->
+      <div class="tag-manager__actions">
+        <button
+          type="submit"
+          class="tag-manager__btn tag-manager__btn--primary"
+          [disabled]="isSaving() || tagForm.invalid"
+        >
+          {{ isSaving() ? 'Saving...' : (isEditing() ? 'Update Tag' : 'Create Tag') }}
+        </button>
+        @if (isEditing()) {
+          <button
+            type="button"
+            class="tag-manager__btn tag-manager__btn--secondary"
+            (click)="cancelEdit()"
+            [disabled]="isSaving()"
+          >
+            Cancel
+          </button>
+        }
+      </div>
+    </form>
+  </div>
+
+  <!-- Tags List -->
+  <div class="tag-manager__list-section">
+    <h2 class="tag-manager__section-title">All Tags</h2>
+
+    <!-- Loading State -->
+    @if (isLoading()) {
+      <div class="tag-manager__loading">
+        <div class="tag-manager__spinner"></div>
+        <p class="tag-manager__loading-text">Loading tags...</p>
+      </div>
+    }
+
+    <!-- Empty State -->
+    @if (!isLoading() && tags().length === 0) {
+      <div class="tag-manager__empty">
+        <p class="tag-manager__empty-text">No tags yet. Create your first tag above.</p>
+      </div>
+    }
+
+    <!-- Tags Grid -->
+    @if (!isLoading() && tags().length > 0) {
+      <div class="tag-manager__grid">
+        @for (tag of tags(); track tag.id) {
+          <div class="tag-manager__card">
+            <div class="tag-manager__card-content">
+              <div class="tag-manager__name-wrapper">
+                <span class="tag-manager__name">{{ tag.name }}</span>
+                @if (tag.nameEn) {
+                  <span class="tag-manager__name-ar">{{ tag.nameEn }}</span>
+                }
+              </div>
+              <code class="tag-manager__slug">{{ tag.slug }}</code>
+            </div>
+            <div class="tag-manager__card-actions">
+              <button
+                (click)="editTag(tag)"
+                class="tag-manager__action-btn tag-manager__action-btn--edit"
+                title="Edit"
+                [disabled]="isDeleting()"
+              >
+                ✏️
+              </button>
+              <button
+                (click)="deleteTag(tag.id)"
+                class="tag-manager__action-btn tag-manager__action-btn--delete"
+                title="Delete"
+                [disabled]="isDeleting()"
+              >
+                🗑️
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

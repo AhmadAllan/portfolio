@@ -1,0 +1,304 @@
+<div class="projects-editor">
+  @if (loading) {
+    <div class="loading">
+      <p>Loading projects...</p>
+    </div>
+  }
+
+  @if (error) {
+    <div class="error">
+      <p class="error-message">{{ error }}</p>
+      <button (click)="loadProjects()" class="retry-button">Retry</button>
+    </div>
+  }
+
+  @if (!loading) {
+    <div class="projects-list">
+      <div class="list-header">
+        <h2>Projects</h2>
+        <button (click)="createProject()" class="create-button">+ New Project</button>
+      </div>
+
+      @for (project of projects; track project.id) {
+        <div class="project-card" (click)="editProject(project)">
+          <div class="project-thumbnail">
+            <img [src]="project.thumbnail" [alt]="project.title" />
+          </div>
+          <div class="project-info">
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-description">{{ project.description }}</p>
+            <div class="project-meta">
+              @if (project.status === 'active') {
+                <span class="status-badge status-active">Active</span>
+              }
+              @if (project.status === 'completed') {
+                <span class="status-badge status-completed">Completed</span>
+              }
+              @if (project.status === 'archived') {
+                <span class="status-badge status-archived">Archived</span>
+              }
+              @if (project.featured) {
+                <span class="featured-badge">Featured</span>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (editingId) {
+    <div class="editor-overlay">
+      <div class="editor-modal">
+        <div class="modal-header">
+          <h3>{{ editingId ? 'Edit Project' : 'Create Project' }}</h3>
+          <button (click)="cancelEdit()" class="close-button">✕</button>
+        </div>
+
+        <form [formGroup]="projectsForm" (ngSubmit)="editingId ? updateProject() : createProject()" class="project-form">
+          <div class="form-section">
+            <h3>Basic Information</h3>
+
+            <div class="form-row">
+              <label for="title-ar">Title (Arabic)*</label>
+              <input
+                id="title-ar"
+                type="text"
+                formControlName="title"
+                placeholder="Enter project title in Arabic"
+              />
+            </div>
+
+            <div class="form-row">
+              <label for="title-en">Title (English)</label>
+              <input
+                id="title-en"
+                type="text"
+                formControlName="titleEn"
+                placeholder="Enter project title in English"
+              />
+            </div>
+
+            <div class="form-row">
+              <label for="slug">Slug*</label>
+              <input
+                id="slug"
+                type="text"
+                formControlName="slug"
+                placeholder="project-slug"
+                [disabled]="!!editingId"
+              />
+            </div>
+
+            <div class="form-row">
+              <label for="thumbnail">Thumbnail URL*</label>
+              <input
+                id="thumbnail"
+                type="url"
+                formControlName="thumbnail"
+                placeholder="https://..."
+              />
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Description</h3>
+
+            <div class="form-row">
+              <label for="description-ar">Description (Arabic)*</label>
+              <textarea
+                id="description-ar"
+                formControlName="description"
+                rows="4"
+                placeholder="Enter project description in Arabic"
+              ></textarea>
+            </div>
+
+            <div class="form-row">
+              <label for="description-en">Description (English)</label>
+              <textarea
+                id="description-en"
+                formControlName="descriptionEn"
+                rows="4"
+                placeholder="Enter project description in English"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Technical Stack</h3>
+
+            @for (techGroup of techStack(); track $index; let i = $index) {
+              <div formGroupName="techStack" class="tech-stack-item">
+                <div class="form-row">
+                  <label [for]="'tech-' + i">Technology {{ i + 1 }}</label>
+                  <input
+                    [id]="'tech-' + i"
+                      type="text"
+                      formControlName="value"
+                      placeholder="e.g., Angular, React"
+                  />
+                </div>
+
+                <button type="button" (click)="removeTechStackItem(i)" class="remove-tech-button">
+                  Remove
+                </button>
+              </div>
+            }
+
+            <button type="button" (click)="addTechStackItem()" class="add-tech-button">
+              + Add Technology
+            </button>
+          </div>
+
+          <div class="form-section">
+            <h3>Additional Details</h3>
+
+            <div class="form-row">
+              <label for="role-ar">Role (Arabic)</label>
+              <input
+                id="role-ar"
+                type="text"
+                formControlName="role"
+                placeholder="e.g., Frontend Developer"
+              />
+            </div>
+
+            <div class="form-row">
+              <label for="role-en">Role (English)</label>
+              <input
+                id="role-en"
+                type="text"
+                formControlName="roleEn"
+                placeholder="e.g., Frontend Developer"
+              />
+            </div>
+
+            <div class="form-row">
+              <label for="duration-ar">Duration (Arabic)</label>
+              <input
+                id="duration-ar"
+                type="text"
+                formControlName="duration"
+                placeholder="e.g., 6 months"
+              />
+            </div>
+
+            <div class="form-row">
+              <label for="duration-en">Duration (English)</label>
+              <input
+                id="duration-en"
+                type="text"
+                formControlName="durationEn"
+                placeholder="e.g., 6 months"
+              />
+            </div>
+
+            <div class="form-row">
+              <label for="team-size">Team Size</label>
+              <input
+                id="team-size"
+                type="number"
+                formControlName="teamSize"
+                min="1"
+                placeholder="Number of team members"
+              />
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Challenges</h3>
+
+            <div class="form-row">
+              <label for="challenges-ar">Challenges (Arabic)</label>
+              <textarea
+                id="challenges-ar"
+                formControlName="challenges"
+                rows="4"
+                placeholder="Describe challenges faced"
+              ></textarea>
+            </div>
+
+            <div class="form-row">
+              <label for="challenges-en">Challenges (English)</label>
+              <textarea
+                id="challenges-en"
+                formControlName="challengesEn"
+                rows="4"
+                placeholder="Describe challenges faced"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Links</h3>
+
+            <div class="form-row">
+              <label for="live-url">Live URL</label>
+              <input
+                id="live-url"
+                type="url"
+                formControlName="liveUrl"
+                placeholder="https://..."
+              />
+            </div>
+
+            <div class="form-row">
+              <label for="github-url">GitHub URL</label>
+              <input
+                id="github-url"
+                type="url"
+                formControlName="githubUrl"
+                placeholder="https://github.com/..."
+              />
+            </div>
+          </div>
+
+          <div class="form-section">
+            <h3>Settings</h3>
+
+            <div class="form-row">
+              <label for="status">Status*</label>
+              <select id="status" formControlName="status">
+                <option value="active">Active</option>
+                <option value="completed">Completed</option>
+                <option value="archived">Archived</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="display-order">Display Order</label>
+              <input
+                id="display-order"
+                type="number"
+                formControlName="displayOrder"
+                min="0"
+              />
+            </div>
+
+            <div class="form-row checkbox-row">
+              <label for="featured">Featured</label>
+              <input
+                id="featured"
+                type="checkbox"
+                formControlName="featured"
+              />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" (click)="cancelEdit()" class="cancel-button">Cancel</button>
+            <button type="submit" [disabled]="saving || projectsForm.invalid" class="save-button">
+              @if (!saving) {
+                <span>{{ editingId ? 'Update' : 'Create' }} Project</span>
+              }
+              @if (saving) {
+                <span>Saving...</span>
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+</div>

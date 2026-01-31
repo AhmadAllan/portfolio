@@ -1,0 +1,15 @@
+# Add files here to ignore them from ESLint
+/dist
+/build
+/out-tsc
+/tmp
+/coverage
+/.nx/cache
+/.nx/workspace-data
+.angular
+node_modules
+*.log
+.env
+.env.local
+.env.*.local
+.env.production

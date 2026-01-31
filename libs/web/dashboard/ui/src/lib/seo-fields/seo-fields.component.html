@@ -1,0 +1,102 @@
+<div class="seo-fields">
+  <div class="seo-fields__header">
+    <h3 class="seo-fields__title">SEO Settings</h3>
+    @if (showLanguageToggle) {
+      <div class="seo-fields__language-toggle">
+        <button
+          type="button"
+          class="seo-fields__lang-btn"
+          [class.active]="isEnglish"
+          (click)="toggleLanguage('en')"
+        >
+          English
+        </button>
+        <button
+          type="button"
+          class="seo-fields__lang-btn"
+          [class.active]="!isEnglish"
+          (click)="toggleLanguage('ar')"
+        >
+          العربية
+        </button>
+      </div>
+    }
+  </div>
+
+  <div class="seo-fields__form">
+    <!-- Meta Title -->
+    <div class="seo-fields__field">
+      @if (isEnglish) {
+        <label class="seo-fields__label" for="metaTitle">
+          Meta Title
+        </label>
+        <input
+          id="metaTitle"
+          type="text"
+          class="seo-fields__input"
+          [ngModel]="metaTitle"
+          (ngModelChange)="onMetaTitleChange($event)"
+          placeholder="Enter SEO meta title (English)"
+        />
+      } @else {
+        <label class="seo-fields__label" for="metaTitleEn">
+          Meta Title (Arabic)
+        </label>
+        <input
+          id="metaTitleEn"
+          type="text"
+          class="seo-fields__input"
+          [ngModel]="metaTitleEn"
+          (ngModelChange)="onMetaTitleEnChange($event)"
+          placeholder="أدخل عنوان SEO (عربي)"
+          dir="rtl"
+        />
+      }
+    </div>
+
+    <!-- Meta Description -->
+    <div class="seo-fields__field">
+      @if (isEnglish) {
+        <label class="seo-fields__label" for="metaDescription">
+          Meta Description
+        </label>
+        <textarea
+          id="metaDescription"
+          class="seo-fields__textarea"
+          [ngModel]="metaDescription"
+          (ngModelChange)="onMetaDescriptionChange($event)"
+          placeholder="Enter SEO meta description (English)"
+          rows="3"
+        ></textarea>
+      } @else {
+        <label class="seo-fields__label" for="metaDescriptionEn">
+          Meta Description (Arabic)
+        </label>
+        <textarea
+          id="metaDescriptionEn"
+          class="seo-fields__textarea"
+          [ngModel]="metaDescriptionEn"
+          (ngModelChange)="onMetaDescriptionEnChange($event)"
+          placeholder="أدخل وصف SEO (عربي)"
+          rows="3"
+          dir="rtl"
+        ></textarea>
+      }
+    </div>
+
+    <!-- OG Image -->
+    <div class="seo-fields__field">
+      <label class="seo-fields__label" for="ogImage">
+        OG Image
+      </label>
+      <input
+        id="ogImage"
+        type="text"
+        class="seo-fields__input"
+        [ngModel]="ogImage"
+        (ngModelChange)="onOgImageChange($event)"
+        placeholder="Enter Open Graph image URL"
+      />
+    </div>
+  </div>
+</div>

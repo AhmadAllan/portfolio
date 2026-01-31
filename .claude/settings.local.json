@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash:*)",
+      "Bash(powershell -Command \"Get-Content .specify/scripts/bash/check-prerequisites.sh\")",
+      "Bash(npm install:*)",
+      "mcp__angular-cli__list_projects",
+      "mcp__nx-mcp__nx_workspace",
+      "Bash(xargs cat:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx nx:*)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run:*)",
+      "Bash(chmod:*)",
+      "Bash(npx eslint:*)"
+    ]
+  }
+}

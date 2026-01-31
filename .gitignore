@@ -42,9 +42,20 @@ Thumbs.db
 .nx/workspace-data
 
 # AI generated files
-.specify
-.claude
+#.specify
+#.claude
+#specs
+#
+#CLAUDE.md
+#lovecraftian-portfolio-prd.md
+#speckit-constitution.md
 
-CLAUDE.md
-lovecraftian-portfolio-prd.md
-speckit-constitution.md
+# Environment variables
+.env
+
+# Angular
+.angular
+
+__screenshots__/
+
+vitest.config.*.timestamp*

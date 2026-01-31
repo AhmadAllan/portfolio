@@ -1,0 +1,251 @@
+<div class="post-editor">
+  <div class="post-editor__header">
+    <h1 class="post-editor__title">{{ postId ? 'Edit Post' : 'Create New Post' }}</h1>
+    <button type="button" class="post-editor__back-btn" (click)="router.navigate(['/dashboard/posts'])">
+      ← Back to Posts
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <div class="post-editor__loading">
+      <div class="post-editor__spinner"></div>
+      <p class="post-editor__loading-text">Loading...</p>
+    </div>
+  } @else {
+    <form class="post-editor__form" [formGroup]="form">
+      <!-- Language Toggle -->
+      <div class="post-editor__language-toggle">
+        <button type="button" class="post-editor__lang-btn" [class.active]="currentLanguage === 'en'" (click)="toggleLanguage('en')">
+          English
+        </button>
+        <button type="button" class="post-editor__lang-btn" [class.active]="currentLanguage === 'ar'" (click)="toggleLanguage('ar')">
+          العربية
+        </button>
+      </div>
+
+      <!-- Basic Info -->
+      <div class="post-editor__section">
+        <h2 class="post-editor__section-title">Basic Information</h2>
+
+        <div class="post-editor__field">
+          <label class="post-editor__label">Title *</label>
+          <input
+            type="text"
+            class="post-editor__input"
+            [ngModel]="form.title"
+            placeholder="Post title"
+            required
+          />
+        </div>
+
+        @if (currentLanguage === 'en') {
+          <div class="post-editor__field">
+            <label class="post-editor__label">Title (English)</label>
+            <input
+              type="text"
+              class="post-editor__input"
+              [ngModel]="form.titleEn"
+              placeholder="Post title in English"
+            />
+          </div>
+        } @else {
+          <div class="post-editor__field">
+            <label class="post-editor__label">العنوان (عربي)</label>
+            <input
+              type="text"
+              class="post-editor__input"
+              [ngModel]="form.titleEn"
+              placeholder="عنوان المشاركة بالعربي"
+              dir="rtl"
+            />
+          </div>
+        }
+
+        <div class="post-editor__field">
+          <label class="post-editor__label">Status</label>
+          <select class="post-editor__select" [ngModel]="form.status">
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+            <option value="archived">Archived</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="post-editor__section">
+        <h2 class="post-editor__section-title">Content</h2>
+
+        @if (currentLanguage === 'en') {
+          <div class="post-editor__field">
+            <label class="post-editor__label">Excerpt</label>
+            <textarea
+              class="post-editor__textarea"
+              [ngModel]="form.excerpt"
+              placeholder="Short excerpt for post listing"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="post-editor__field">
+            <label class="post-editor__label">Excerpt (Arabic)</label>
+            <textarea
+              class="post-editor__textarea"
+              [ngModel]="form.excerptEn"
+              placeholder="مقتطف قصير للمشاركة"
+              rows="3"
+              dir="rtl"
+            ></textarea>
+          </div>
+
+        <div class="post-editor__field post-editor__field--full-width">
+          <label class="post-editor__label">Content *</label>
+          <lib-markdown-editor
+            [(content)]="form.content"
+            placeholder="Write your post content in markdown..."
+          ></lib-markdown-editor>
+        </div>
+
+        @if (currentLanguage === 'en') {
+          <div class="post-editor__field post-editor__field--full-width">
+            <label class="post-editor__label">Content (English)</label>
+            <lib-markdown-editor
+              [(content)]="form.contentEn"
+              placeholder="Write your post content in English..."
+            ></lib-markdown-editor>
+          </div>
+        } @else {
+          <div class="post-editor__field post-editor__field--full-width">
+            <label class="post-editor__label">المحتوى (عربي)</label>
+            <lib-markdown-editor
+              [(content)]="form.contentEn"
+              placeholder="اكتب محتوى المشاركة بالعربي..."
+            ></lib-markdown-editor>
+          </div>
+        }
+      </div>
+
+      <!-- SEO Settings -->
+      <div class="post-editor__section">
+        <h2 class="post-editor__section-title">SEO Settings</h2>
+
+        <lib-seo-fields
+          [(metaTitle)]="form.metaTitle"
+          [(metaTitleEn)]="form.metaTitleEn"
+          [(metaDescription)]="form.metaDescription"
+          [(metaDescriptionEn)]="form.metaDescriptionEn"
+          [(ogImage)]="form.ogImage"
+          [showLanguageToggle]="true"
+          [currentLanguage]="currentLanguage"
+          (metaTitleChange)="form.metaTitle = $event"
+          (metaTitleEnChange)="form.metaTitleEn = $event"
+          (metaDescriptionChange)="form.metaDescription = $event"
+          (metaDescriptionEnChange)="form.metaDescriptionEn = $event"
+          (ogImageChange)="form.ogImage = $event"
+        ></lib-seo-fields>
+      </div>
+
+      <!-- Media -->
+      <div class="post-editor__section">
+        <h2 class="post-editor__section-title">Media</h2>
+
+        <div class="post-editor__field">
+          <label class="post-editor__label">Featured Image</label>
+          <input
+            type="text"
+            class="post-editor__input"
+            [ngModel]="form.featuredImage"
+            placeholder="Featured image URL"
+          />
+        </div>
+        <div class="post-editor__field">
+          <label class="post-editor__label">Series</label>
+          <select class="post-editor__select" [ngModel]="form.seriesId">
+            <option value="">None</option>
+            @for (let series of series) {
+              <option [value]="series.id">{{ series.title }}</option>
+            }
+          </select>
+        </div>
+        <div class="post-editor__field">
+          <label class="post-editor__label">Series Order</label>
+          <input
+            type="number"
+            class="post-editor__input"
+            [ngModel]="form.seriesOrder"
+            placeholder="Order in series"
+            min="1"
+          />
+        </div>
+      </div>
+
+      <!-- Taxonomy -->
+      <div class="post-editor__section">
+        <h2 class="post-editor__section-title">Categories</h2>
+
+        <div class="post-editor__multi-select">
+          @for (let category of categories) {
+            <label class="post-editor__checkbox-label">
+              <input
+                type="checkbox"
+                [ngModel]="form.categoryIds"
+                [value]="category.id"
+              />
+              <span class="post-editor__checkbox-text">{{ category.name }}</span>
+            </label>
+          }
+        </div>
+
+        <div class="post-editor__section">
+          <h2 class="post-editor__section-title">Tags</h2>
+
+          <div class="post-editor__multi-select">
+            @for (let tag of tags) {
+              <label class="post-editor__checkbox-label">
+                <input
+                  type="checkbox"
+                  [ngModel]="form.tagIds"
+                  [value]="tag.id"
+                />
+                <span class="post-editor__checkbox-text">{{ tag.name }}</span>
+              </label>
+            }
+          </div>
+
+        <div class="post-editor__section">
+          <h2 class="post-editor__section-title">Related Posts</h2>
+
+          <div class="post-editor__multi-select">
+            @for (let post of posts) {
+              <label class="post-editor__checkbox-label">
+                <input
+                  type="checkbox"
+                  [ngModel]="form.relatedPostIds"
+                  [value]="post.id"
+                />
+                <span class="post-editor__checkbox-text">{{ post.title }}</span>
+              </label>
+            }
+          </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="post-editor__actions">
+        <button
+          type="submit"
+          class="post-editor__btn post-editor__btn--primary"
+          (click)="savePost()"
+          [disabled]="!isValid || isSaving"
+        >
+          <span *ngIf="isSaving">Saving...</span>
+          <span *ngIf="!isSaving">{{ postId ? 'Update Post' : 'Create Post' }}</span>
+        </button>
+        <button
+          type="button"
+          class="post-editor__btn post-editor__btn--secondary"
+          (click)="router.navigate(['/dashboard/posts'])"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
